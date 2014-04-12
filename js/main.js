@@ -78,7 +78,7 @@ require(
 
     var init = function init( world, Physics ){
 
-    	world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
+    	world.options({timestep: 1000/10}); // set the physics resolution to 30 fps
 
         // bodies
         var ship = Physics.body('player', {
@@ -120,7 +120,7 @@ require(
         var mainbase = Physics.body('circle', {
             // fixed: true,
             // hidden: true,
-            mass: 10000,
+            mass: 1000,
             radius: 30,
             x: 400,
             y: 300

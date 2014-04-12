@@ -11,6 +11,7 @@ function GameState() {
 	};
 
 	// current mission score
+	// not used
 	this._missionScore = {
 		'preciousMetals' : 0,
 		'constructionMaterials' : 0,
@@ -18,22 +19,47 @@ function GameState() {
 	};
 
 	this._shipCargo = {
-		'preciousMetals' : 0,
-		'constructionMaterials' : 0,
+		'preciousMetals' : [],
+		'constructionMaterials' : [],
 		'waste': 0
 	};
 
 	this._shipFuel = 100;
 	this._unlockedAchievements = { };
+	this._storyProgression = 1;
+
+	this._money = 0;
 
 	this._world = null;
-
 	this.isPaused = true;
+
+	this.cashValues = {
+			// values in $1000s
+			preciousMetals: [
+				{value: 50},
+				{value: 80},
+				{value: 120},
+				{value: 150},
+				{value: 300},
+				{value: 600}
+			],
+			constructionMaterials: [
+				{value: 40},
+				{value: 100},
+				{value: 200},
+				{value: 250},
+				{value: 400},
+				{value: 500},
+			],
+			waste: 5
+	};
+
+
 }
 
 GameState.prototype.init = function() {
 	this.bindUI();
-}
+};
 
 GameState.prototype.setWorld = function(world) {
 	this._world = world;
@@ -47,7 +73,7 @@ GameState.prototype.setWorld = function(world) {
 };
 
 GameState.prototype.bindUI = function() {
-	console.log('#handbook-mining');
+
 	$('#handbook-mining').on('click',function() {
 		$('#gameHandbookModal').modal({
 			backdrop: 'static',
@@ -112,7 +138,25 @@ GameState.prototype.unpause = function() {
  * @param amount
  */
 GameState.prototype.pickup = function(type, amount) {
+	console.log('picked up ',type,amount);
 
+	if (type=='none') return false;
+	switch (type) {
+		case 'preciousMetals':
+			this._shipCargo.preciousMetals.push( Math.floor((Math.random()*6)+1) );
+		break;
+		case 'constructionMaterials':
+			this._shipCargo.constructionMaterials.push( Math.floor((Math.random()*6)+1) );
+		break;
+		case 'waste':
+			this._shipCargo.waste+=amount;
+		break;
+		case 'fuel':
+			this.addFuel(5);
+		break;
+	}
+
+	this.render();
 	this.checkAchievements();
 };
 
@@ -123,6 +167,30 @@ GameState.prototype.pickup = function(type, amount) {
  */
 GameState.prototype.onDock = function(dockingObject) {
   this._shipFuel = 100;
+
+  var score = 0;
+
+  for (i=0; i<this._shipCargo.preciousMetals.length; i++) {
+	  var pickupIndex = this._shipCargo.preciousMetals[i];
+	  score += this.cashValues.preciousMetals[pickupIndex].value;
+  }
+  for (i=0; i<this._shipCargo.constructionMaterials.length; i++) {
+	  var pickupIndex = this._shipCargo.constructionMaterials[i];
+	  score += this.cashValues.constructionMaterials[pickupIndex].value;
+  }
+  score += (this._shipCargo.waste *  this.cashValues.waste);
+
+  this._money += score;
+
+  alert('YOU GOT: '+  score);
+
+  // display message
+
+  // reset cargo
+  this._shipCargo.constructionMaterials = Array();
+  this._shipCargo.preciousMetals = Array();
+  this._shipCargo.waste = 0;
+
 };
 
 
@@ -151,6 +219,13 @@ GameState.prototype.useFuel = function(units) {
 	return this._shipFuel;
 };
 
+GameState.prototype.addFuel = function(units) {
+	this._shipFuel += units;
+	if (this._shipFuel >100) {
+		this._shipFuel = 100;
+	}
+};
+
 /**
  * Core UI rendering functions
  *
@@ -161,7 +236,11 @@ GameState.prototype.render = function() {
 
 	if (this.isPaused==true) return false;
 
-	$('#score').html( 'points are happening...');
+	$('#scores .preciousMetals span.badge').html(this._shipCargo.preciousMetals.length);
+	$('#scores .constructionMaterials span.badge').html(this._shipCargo.constructionMaterials.length);
+	$('#scores .waste span.badge').html(this._shipCargo.waste);
+	$('#scores .money span.badge').html(this._money);
+
 	// update fuel gauge
 	$('#fuel .progress-bar ').attr('aria-valuenow',this._shipFuel).css('width', this._shipFuel+'%');
 

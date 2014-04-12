@@ -21,13 +21,12 @@ define(
                     this.view = ast1;
                 },
                 blowUp: function(){
-                    var asteroidTypes = {
-                        'asteroid-m' : 20,
-                        'asteroid-s' : 20,
-                        'asteroid-c' : 20
+                    var pickups = {
+                        'pickup-c' : 25,
+                        'pickup-f' : 50,
+                        'pickup-w' : 25
                     };
-                    var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
-                    parent.blowUp.call(this, "pickup-c");
+                    parent.blowUp.call(this, pickups);
                 }
             };
         });

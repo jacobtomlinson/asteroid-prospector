@@ -78,7 +78,8 @@ require(
 
     var init = function init( world, Physics ){
 
-    	world.options({timestep: 1000/10}); // set the physics resolution to 30 fps
+    	//world.options({timestep: 1000/10});
+    	world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
 
         // bodies
         var ship = Physics.body('player', {

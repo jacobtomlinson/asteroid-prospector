@@ -14,7 +14,7 @@ define(
 
             var deg = Math.PI/180;
             var shipImg = new Image();
-            //var shipThrustImg = new Image();
+            var shipThrustImg = new Image();
             shipImg.src = require.toUrl('images/ship.png');
             shipThrustImg.src = require.toUrl('images/ship-thrust.png');
 

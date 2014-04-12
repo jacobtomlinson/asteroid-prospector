@@ -83,7 +83,7 @@ require(
         for ( var i = 0, l = 50; i < l; ++i ){
 
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 200 + 100 * Math.random() + i * 20;
+            var r = 300 + 100 * Math.random() + i * 20;
 
             var asteroidTypes = [
                 'asteroid-m',

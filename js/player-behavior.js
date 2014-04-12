@@ -100,14 +100,22 @@ define(
                             col.bodyB.gameType !== 'debris' && 
                             (col.bodyA === player || col.bodyB === player) 
                         ){
-                            player.blowUp();
-                            world.removeBehavior( this );
-                            this.gameover = true;
+                            if ( col.bodyA.gameType === 'base' ||
+                                 col.bodyB.gameType === 'base'
+                            ){
+                              console.log("GameState.onDock()")
+                            }
+                            else{
+                              player.blowUp();
+                              world.removeBehavior( this );
+                              this.gameover = true;
 
-                            // when we crash, we'll publish an event to the world
-                            // that we can listen for to prompt to restart the game
-                            world.publish('lose-game');
-                            return;
+                              // when we crash, we'll publish an event to the world
+                              // that we can listen for to prompt to restart the game
+                              world.publish('lose-game');
+                              return;
+    
+                            }
                         }
                     }
                 },

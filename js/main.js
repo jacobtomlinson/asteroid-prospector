@@ -67,6 +67,8 @@ require(
 
     var init = function init( world, Physics ){
 
+	world.options({timestep: 1000/10});
+
         // bodies
         var ship = Physics.body('player', {
             x: 400,
@@ -107,6 +109,18 @@ require(
         //});
         //planet.view = new Image();
         //planet.view.src = require.toUrl('images/planet.png');
+
+        var mainbase = Physics.body('circle', {
+            // fixed: true,
+            // hidden: true,
+            mass: 10000,
+            radius: 30,
+            x: 400,
+            y: 300
+        });
+        mainbase.gameType = 'base';
+        mainbase.view = new Image();
+        mainbase.view.src = require.toUrl('images/ufo.png');
 
         // render on every step
         world.subscribe('step', function(){
@@ -231,7 +245,7 @@ require(
         world.add([
             ship,
             playerBehavior,
-            //planet,
+            mainbase,
             Physics.behavior('newtonian', { strength: 1e-4 }),
             Physics.behavior('sweep-prune'),
             Physics.behavior('body-collision-detection'),

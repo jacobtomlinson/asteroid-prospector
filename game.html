@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>APE Mining Corporation.</title>
+		<title>APE Mining Incorporation</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,19 +29,21 @@
 				</div>
 				<div class="navbar-collapse ">
 					<ul class="nav navbar-nav">
-						<li><a href="#">Home</a></li>
-						<li class="active"><a href="#game">Game</a></li>
+						<li><a href="index.html">Home</a></li>
+						<li class="active"><a href="game.html">Game</a></li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#handbook">Employee Handbook
 							<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="fa-building-o fa-static"></i> Company Messages</a></li>
-								<li><a href="#"><i class="fa-certificate fa-static"></i> Achievements</a></li>
-								<li><a href="#"><i class=" fa-static"></i> Mining Information</a></li>
+								<li><a id="handbook-company" href="#">			<i class="fa-building-o fa-static"></i> Company Messages</a></li>
+								<li><a id="handbook-achievements" href="#">	<i class="fa-certificate fa-static"></i> Achievements</a></li>
+								<li><a id="handbook-mining" href="#">				<i class="fa-static"></i> Mining Information</a></li>
 							</ul>
 						</li>
-
 					</ul>
+					<div class="btnContainer">
+						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" >Restart Game</a></li>
+					</div>
 					<ul class="nav navbar-nav pull-right">
 						<li><a href="#score">Score: <span id="score"></span></a></li>
 						<li><a href="#time">Time: <span id="time"></span></a></li>
@@ -51,12 +53,69 @@
 
 		<canvas id="viewport"></canvas>
 
+		<div id="gameStartModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" id="myModalLabel">Welcome to APE Mining Incorporated!</h4>
+		      </div>
+		      <div class="modal-body">
+					<p>Introduction Game Text</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="gameStartBtn">Lets Start Mining!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div id="gameHandbookModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">APE: Employee Handbook</h4>
+		      </div>
+		      <div class="modal-body">
+					<p>Handbook text</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
+		<script type="text/javascript">
+		<!-- this is hacky JS namespacing stuff that we will fix when we get time! -->
+		var gamestate = null;
+		var newGame = null;
+		</script>
+
 		<script src="js/require.js"></script>
 		<script src="js/main.js"></script>
+		<script src="js/gamestate.js"></script>
+		<script type="text/javascript">
+		var gamestate = new GameState();
+		gamestate.init();
+
+			$(function() {
+				$('#gameStartModal').modal({
+					backdrop: 'static',
+					show:true
+				});
+
+				$('#gameStartBtn').on('click',function() {
+					$('#gameStartModal').modal('hide');
+					gamestate.startGame();
+				});
+			});
+		</script>
 	</body>
 
 	<!-- Google Analytics -->
@@ -72,3 +131,4 @@
 		</script>
 	</body>
 </html>
+

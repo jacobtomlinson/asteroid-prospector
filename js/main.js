@@ -38,20 +38,7 @@ require(
 ){
 
 
-	var gamestate = new GameState();
-
-    // display start game message
-    document.body.className = 'before-game';
-    var inGame = false;
-    document.addEventListener('keydown', function( e ){
-
-        // if user presses spacebar inbetween games, we'll load a new game
-        if (!inGame && e.keyCode === 90){
-            document.body.className = 'in-game';
-            inGame = true;
-            newGame();
-        }
-    });
+	gamestate = new GameState();
 
     // set up the renderer and point it to the viewport
     var renderer = Physics.renderer('canvas', {
@@ -78,7 +65,7 @@ require(
 
     var init = function init( world, Physics ){
 
-    	world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
+    	world.options({timestep: 1000/30}); // set the physics resolution to 30 fps
 
         // bodies
         var ship = Physics.body('player', {
@@ -249,28 +236,15 @@ require(
     };
 
     var world = null;
-    var newGame = function newGame(){
+     newGame = function newGame(){
 
         if (world){
             world.destroy();
         }
 
-        //time = 5;
-
         world = Physics( init );
-
         gamestate.setWorld(world);
 
-        world.subscribe('lose-game', function(){
-            world.pause();
-            document.body.className = 'lose-game';
-            inGame = false;
-        });
-        world.subscribe('win-game', function(){
-            world.pause();
-            document.body.className = 'win-game';
-            inGame = false;
-        });
     };
 
     // subscribe to ticker and start looping

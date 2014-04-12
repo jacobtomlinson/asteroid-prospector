@@ -20,28 +20,63 @@ function GameState() {
 	this._shipCargo = {
 		'preciousMetals' : 0,
 		'constructionMaterials' : 0,
-		'waste': 0,
-	}
+		'waste': 0
+	};
 
 	this._shipFuel = 100;
-	this._unlockedAchievements = { }
+	this._unlockedAchievements = { };
 
 	this._world = null;
 }
 
+GameState.prototype.init = function() {
+	this.bindUI();
+}
+
 GameState.prototype.setWorld = function(world) {
 	this._world = world;
+
+	var thisGamestate = this;
+
+	this._world.subscribe('lose-game', function(){
+		thisGamestate.gameOver();
+     });
+
 };
 
-/**
- * Override the score
- *
- * @param score
- */
-GameState.prototype.setScore = function(score) {
-	this._score = score;
-	this.render();
+GameState.prototype.bindUI = function() {
+	console.log('#handbook-mining');
+	$('#handbook-mining').on('click',function() {
+		$('#gameHandbookModal').modal({
+			backdrop: 'static',
+			show:true
+		});
+	});
+	$('#handbook-company').on('click',function() {
+		$('#gameHandbookModal').modal({
+			backdrop: 'static',
+			show:true
+		});
+	});
+	$('#handbook-achievements').on('click',function() {
+		$('#gameHandbookModal').modal({
+			backdrop: 'static',
+			show:true
+		});
+	});
 };
+
+GameState.prototype.startGame = function () {
+	newGame();
+};
+
+GameState.prototype.gameOver = function() {
+	this._world.pause();
+	alert('GameOver!');
+	$('#restartGameBtn').show();
+
+};
+
 
 /**
  * When your ship picks up resources, add them by calling this function
@@ -52,7 +87,6 @@ GameState.prototype.setScore = function(score) {
 GameState.prototype.pickup = function(type, amount) {
 
 	this.checkAchievements();
-
 }
 
 /**

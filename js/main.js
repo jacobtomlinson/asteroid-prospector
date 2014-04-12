@@ -38,20 +38,7 @@ require(
 ){
 
 
-	var gamestate = new GameState();
-
-    // display start game message
-    document.body.className = 'before-game';
-    var inGame = false;
-    document.addEventListener('keydown', function( e ){
-
-        // if user presses spacebar inbetween games, we'll load a new game
-        if (!inGame && e.keyCode === 90){
-            document.body.className = 'in-game';
-            inGame = true;
-            newGame();
-        }
-    });
+	gamestate = new GameState();
 
     // set up the renderer and point it to the viewport
     var renderer = Physics.renderer('canvas', {
@@ -78,7 +65,7 @@ require(
 
     var init = function init( world, Physics ){
 
-    	world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
+    	world.options({timestep: 1000/30}); // set the physics resolution to 30 fps
 
         // bodies
         var ship = Physics.body('player', {
@@ -96,7 +83,7 @@ require(
         for ( var i = 0, l = 50; i < l; ++i ){
 
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 200 + 100 * Math.random() + i * 20;
+            var r = 300 + 100 * Math.random() + i * 20;
 
             var asteroidTypes = [
                 'asteroid-m',
@@ -116,6 +103,19 @@ require(
                 restitution: 0.6
             }));
         }
+
+        var mainbase = Physics.body('circle', {
+            fixed: true,
+            // hidden: true,
+            mass: 1000,
+            radius: 30,
+            x: 400,
+            y: 300
+        });
+        mainbase.gameType = 'base';
+        mainbase.view = new Image();
+        mainbase.view.src = require.toUrl('images/station.png');
+
 
         // render on every step
         world.subscribe('step', function(){
@@ -146,21 +146,12 @@ require(
 
 
         world.subscribe('collect-point', function( point ){
-        	gamestate.setScore(score);
+            points.score1 += 1;
+        	gamestate.setScore(points.score1);
         });
 
-        var time = 60;
-        document.getElementById('time').innerHTML=time;
         var countDown = setInterval(function(){
-            time --;
-            document.getElementById('time').innerHTML=time;
-            if (time <= 0){
-                world.publish({
-                    topic: 'lose-game',
-                    body: self
-                });
-                clearInterval(countDown);
-            }
+           gamestate.useFuel(1);
         },1000);
 
         // blow up anything that touches a laser pulse
@@ -172,18 +163,22 @@ require(
             for ( var i = 0, l = collisions.length; i < l; ++i ){
                 col = collisions[ i ];
 
-                if ( col.bodyA.gameType === 'laser' || col.bodyB.gameType === 'laser' ){
+                if ( col.bodyA.gameType === 'laser' || col.bodyB.gameType === 'laser'){
                     if ( col.bodyA.blowUp ){
                         col.bodyA.blowUp();
                         world.removeBody( col.bodyB );
                     } else {
-                        world.removeBody( col.bodyA );
+                        if (col.bodyA.gameType !== 'base'){
+                            world.removeBody( col.bodyA );
+                        }
                     }
                     if ( col.bodyB.blowUp ){
                         col.bodyB.blowUp();
                         world.removeBody( col.bodyA );
                     } else {
-                        world.removeBody( col.bodyB );
+                        if (col.bodyB.gameType !== 'base'){
+                            world.removeBody( col.bodyB );
+                        }
                     }
                     return;
                 }
@@ -238,7 +233,7 @@ require(
         world.add([
             ship,
             playerBehavior,
-            //planet,
+            mainbase,
             Physics.behavior('newtonian', { strength: 1e-4 }),
             Physics.behavior('sweep-prune'),
             Physics.behavior('body-collision-detection'),
@@ -249,28 +244,15 @@ require(
     };
 
     var world = null;
-    var newGame = function newGame(){
+     newGame = function newGame(){
 
         if (world){
             world.destroy();
         }
 
-        //time = 5;
-
         world = Physics( init );
-
         gamestate.setWorld(world);
 
-        world.subscribe('lose-game', function(){
-            world.pause();
-            document.body.className = 'lose-game';
-            inGame = false;
-        });
-        world.subscribe('win-game', function(){
-            world.pause();
-            document.body.className = 'win-game';
-            inGame = false;
-        });
     };
 
     // subscribe to ticker and start looping

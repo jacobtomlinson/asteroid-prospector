@@ -9,7 +9,7 @@ define(
         Physics
     ){
 
-        Physics.body('ufo', 'circle', function( parent ){
+        Physics.body('asteroid', 'circle', function( parent ){
             var ast1 = new Image();
             ast1.src = require.toUrl('images/asteroid.png');
 
@@ -19,7 +19,8 @@ define(
 
                     this.view = ast1;
                 },
-                blowUp: function(){
+                blowUp: function(pickup){
+                    pickup = typeof pickup !== 'undefined' ? pickup : "pickup";
                     var self = this;
                     var world = self._world;
                     if (!world){
@@ -28,17 +29,17 @@ define(
                     var scratch = Physics.scratchpad();
                     var rnd = scratch.vector();
                     var pos = this.state.pos;
-                    var n = 40;
-                    var r = 2 * this.geometry.radius;
-                    var size = (r / n) * 2;
+                    var n = Math.floor(Math.random() * 2) + 3;
+                    var r = 40;
+                    var size = 10;
                     var mass = 0.001;
                     var d;
                     var debris = [];
                     
-                    // create debris
+                    // create pickups
                     while ( n-- ){
-                        rnd.set( Math.random() - 0.5, Math.random() - 0.5 ).mult( r );
-                        d = Physics.body('circle', {
+                        rnd.set( Math.random() - 1, Math.random() - 1 ).mult( r );
+                        d = Physics.body(pickup, {
                             x: pos.get(0) + rnd.get(0),
                             y: pos.get(1) + rnd.get(1),
                             //vx: this.state.vel.get(0) + (Math.random() - 0.5),
@@ -50,7 +51,7 @@ define(
                             radius: size,
                             restitution: 0.8
                         });
-                        d.gameType = 'debris';
+                        d.gameType = 'pickup';
 
                         debris.push( d );
                     }
@@ -60,7 +61,7 @@ define(
                             world.removeBody( debris[ i ] );
                         }
                         debris = undefined;
-                    }, 5000);
+                    }, 10000);
 
                     world.add( debris );
                     world.removeBody( self );

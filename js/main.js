@@ -13,9 +13,16 @@ require(
     'physicsjs',
 
     // custom modules
-    'js/player',
-    'js/player-behavior',
-    'js/ufo',
+    'js/gamestate',
+    'js/player/player',
+    'js/player/player-behavior',
+    'js/asteroids/asteroid-c',
+    'js/asteroids/asteroid-s',
+    'js/asteroids/asteroid-m',
+    'js/pickups/pickup-c',
+    'js/pickups/pickup-f',
+    'js/pickups/pickup-p',
+    'js/pickups/pickup-w',
 
     // official modules
     'physicsjs/renderers/canvas',
@@ -29,6 +36,10 @@ require(
     require,
     Physics
 ){
+
+
+	var gamestate = new GameState();
+
     // display start game message
     document.body.className = 'before-game';
     var inGame = false;
@@ -67,6 +78,8 @@ require(
 
     var init = function init( world, Physics ){
 
+    	world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
+
         // bodies
         var ship = Physics.body('player', {
             x: 400,
@@ -78,41 +91,37 @@ require(
         ship.gameType = 'ship';
 
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
-        
-        var ufos = [];
-        for ( var i = 0, l = 30; i < l; ++i ){
+
+        var asteroids = [];
+        for ( var i = 0, l = 50; i < l; ++i ){
 
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 700 + 100 * Math.random() + i * 10;
+            var r = 200 + 100 * Math.random() + i * 20;
 
-            ufos.push( Physics.body('ufo', {
+            var asteroidTypes = [
+                'asteroid-m',
+                'asteroid-s',
+                'asteroid-c'
+            ];
+            var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
+
+            asteroids.push( Physics.body(asteroidTypes[randomAsteroid], {
                 x: 400 + Math.cos( ang ) * r,
                 y: 300 + Math.sin( ang ) * r,
                 vx: 0.03 * Math.sin( ang ),
                 vy: - 0.03 * Math.cos( ang ),
                 angularVelocity: (Math.random() - 0.5) * 0.001,
-                radius: 20,
+                radius: 40,
                 mass: 30,
                 restitution: 0.6
             }));
         }
 
-        //var planet = Physics.body('circle', {
-            // fixed: true,
-            // hidden: true,
-        //    mass: 10000,
-        //   radius: 140,
-        //    x: 400,
-        //    y: 300
-        //});
-        //planet.view = new Image();
-        //planet.view.src = require.toUrl('images/planet.png');
-
         // render on every step
         world.subscribe('step', function(){
             // middle of canvas
-            var middle = { 
-                x: 0.5 * window.innerWidth, 
+            var middle = {
+                x: 0.5 * window.innerWidth,
                 y: 0.5 * window.innerHeight
             };
             // follow player
@@ -120,33 +129,34 @@ require(
             world.render();
         });
 
-        // count number of ufos destroyed
+        // count number of asteroids destroyed
         var killCount = 0;
         world.subscribe('blow-up', function( data ){
-            
+
             killCount++;
-            if ( killCount === ufos.length ){
+            if ( killCount === asteroids.length ){
                 world.publish('win-game');
             }
         });
 
-        var points = 0;
-        document.getElementById('score').innerHTML=points;
-        world.subscribe('collect-point', function( data ){
-            
-            points++;
-            document.getElementById('score').innerHTML=points;
-            
+        var points = {};
+        points.score1 = 0;
+        points.score2 = 0;
+        points.score3 = 0;
+
+
+        world.subscribe('collect-point', function( point ){
+        	gamestate.setScore(score);
         });
 
-        var time = 30;
+        var time = 60;
         document.getElementById('time').innerHTML=time;
         var countDown = setInterval(function(){
             time --;
             document.getElementById('time').innerHTML=time;
             if (time <= 0){
                 world.publish({
-                    topic: 'lose-game', 
+                    topic: 'lose-game',
                     body: self
                 });
                 clearInterval(countDown);
@@ -166,26 +176,23 @@ require(
                     if ( col.bodyA.blowUp ){
                         col.bodyA.blowUp();
                         world.removeBody( col.bodyB );
-                    } else if ( col.bodyB.blowUp ){
+                    } else {
+                        world.removeBody( col.bodyA );
+                    }
+                    if ( col.bodyB.blowUp ){
                         col.bodyB.blowUp();
                         world.removeBody( col.bodyA );
+                    } else {
+                        world.removeBody( col.bodyB );
                     }
                     return;
                 }
                 if ( col.bodyA.gameType === 'ship' || col.bodyB.gameType === 'ship' ){
-                    if ( col.bodyA.gameType === 'debris' ) {
-                        world.removeBody( col.bodyA );
-                        world.publish({
-                            topic: 'collect-point', 
-                            body: self
-                        });
+                    if ( col.bodyA.gameType === 'pickup' ) {
+                        col.bodyA.collect();
                         return;
-                    } else if (col.bodyB.gameType === 'debris' ){
-                        world.removeBody( col.bodyB );
-                        world.publish({
-                            topic: 'collect-point', 
-                            body: self
-                        });
+                    } else if (col.bodyB.gameType === 'pickup' ){
+                        col.bodyB.collect();
                         return;
                     }
                 }
@@ -238,7 +245,7 @@ require(
             Physics.behavior('body-impulse-response'),
             renderer
         ]);
-        world.add( ufos );
+        world.add( asteroids );
     };
 
     var world = null;
@@ -248,11 +255,14 @@ require(
             world.destroy();
         }
 
-
         //time = 5;
 
         world = Physics( init );
+
+        gamestate.setWorld(world);
+
         world.subscribe('lose-game', function(){
+            world.pause();
             document.body.className = 'lose-game';
             inGame = false;
         });
@@ -266,7 +276,7 @@ require(
     // subscribe to ticker and start looping
     Physics.util.ticker.subscribe(function( time ){
         if (world){
-            world.step( time ); 
+            world.step( time );
         }
     }).start();
 });

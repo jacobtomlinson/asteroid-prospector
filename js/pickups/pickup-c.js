@@ -20,7 +20,7 @@ define(
                     this.view = ast1;
                 },
                 collect: function (){
-                   parent.collect.call(this, "score1");
+                   parent.collect.call(this, "constructionMaterials");
                 }
             };
         });

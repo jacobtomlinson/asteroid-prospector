@@ -103,7 +103,7 @@ define(
                             if ( col.bodyA.gameType === 'base' ||
                                  col.bodyB.gameType === 'base'
                             ){
-                              console.log("GameState.onDock()")
+                              gamestate.onDock()
                             }
                             else{
                               player.blowUp();

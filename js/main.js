@@ -150,18 +150,8 @@ require(
         	gamestate.setScore(points.score1);
         });
 
-        var time = 60;
-        document.getElementById('time').innerHTML=time;
         var countDown = setInterval(function(){
-            time --;
-            document.getElementById('time').innerHTML=time;
-            if (time <= 0){
-                world.publish({
-                    topic: 'lose-game',
-                    body: self
-                });
-                clearInterval(countDown);
-            }
+           gamestate.useFuel(1);
         },1000);
 
         // blow up anything that touches a laser pulse

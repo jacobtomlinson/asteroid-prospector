@@ -85,10 +85,10 @@ require(
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
         
         var asteroids = [];
-        for ( var i = 0, l = 30; i < l; ++i ){
+        for ( var i = 0, l = 200; i < l; ++i ){
 
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 700 + 100 * Math.random() + i * 10;
+            var r = 200 + 100 * Math.random() + i * 30;
 
             var asteroidTypes = [
                 'asteroid-m',
@@ -154,7 +154,7 @@ require(
             
         });
 
-        var time = 30;
+        var time = 60;
         document.getElementById('time').innerHTML=time;
         var countDown = setInterval(function(){
             time --;

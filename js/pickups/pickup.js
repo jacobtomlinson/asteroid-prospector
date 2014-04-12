@@ -25,13 +25,13 @@ define(
                     if (!world){
                         return self;
                     }
-                    pickup = typeof pickup !== 'undefined' ? pickup : "score1";
+                    pickup = typeof pickup !== 'undefined' ? pickup : "none";
                     // remove pickup
-                    world.removeBody( this );
                     world.publish({
                         topic: 'collect-point', 
                         body: pickup
                     });
+                    world.removeBody( this );
                 }
             };
         });

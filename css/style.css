@@ -20,9 +20,14 @@ html {
 	padding-left: 40px;
 	background-color:rgba(0,0,0,1);
 	width: 100%;
-	background-image:url("../webimages/sprite1.png");
+	min-width: 900px;
+	background-image:url("../webimages/header.png");
 	background-position:right;
 	background-repeat: no-repeat;
+}
+
+#header a {
+	color: #EDEBEB;
 }
 
 #sidebar {
@@ -53,8 +58,10 @@ html {
 	max-width: 640px;
 }
 
-#footer {
-	width: auto;
-
+#versionTable li {
+	list-style: none;
 }
 
+#footer {
+	width: auto;
+}

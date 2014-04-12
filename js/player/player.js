@@ -125,7 +125,7 @@ define(
                     setTimeout(function(){
                         world.removeBody( laser );
                         laser = undefined;
-                    }, 1200);
+                    }, 400);
                     world.add( laser );
                     return self;
                 },

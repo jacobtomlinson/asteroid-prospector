@@ -139,15 +139,8 @@ require(
             }
         });
 
-        var points = {};
-        points.score1 = 0;
-        points.score2 = 0;
-        points.score3 = 0;
-
-
         world.subscribe('collect-point', function( point ){
-            points.score1 += 1;
-        	gamestate.setScore(points.score1);
+            gamestate.pickup(point.body, 1);
         });
 
         var countDown = setInterval(function(){
@@ -209,9 +202,9 @@ require(
             var lightness;
 
             // draw the radar guides
-            renderer.drawCircle(x, y, r, { strokeStyle: '#090', fillStyle: '#010' });
-            //renderer.drawCircle(x, y, r * 2 / 3, { strokeStyle: '#090' });
-            //renderer.drawCircle(x, y, r / 3, { strokeStyle: '#090' });
+            renderer.drawCircle(x, y, r, { strokeStyle: '#B3B3B3', fillStyle: '#010' });
+            renderer.drawCircle(x, y, r * 2 / 3, { strokeStyle: '#B3B3B3' });
+            renderer.drawCircle(x, y, r / 3, { strokeStyle: '#B3B3B3' });
 
             for (var i = 0, l = data.bodies.length, b = data.bodies[ i ]; b = data.bodies[ i ]; i++){
 

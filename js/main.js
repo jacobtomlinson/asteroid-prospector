@@ -13,9 +13,14 @@ require(
     'physicsjs',
 
     // custom modules
-    'js/player',
-    'js/player-behavior',
-    'js/asteroid',
+    'js/player/player',
+    'js/player/player-behavior',
+    'js/asteroids/asteroid-c',
+    'js/asteroids/asteroid-s',
+    'js/asteroids/asteroid-m',
+    'js/pickups/pickup-c',
+    'js/pickups/pickup-s',
+    'js/pickups/pickup-m',
 
     // official modules
     'physicsjs/renderers/canvas',
@@ -85,7 +90,14 @@ require(
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
             var r = 700 + 100 * Math.random() + i * 10;
 
-            asteroids.push( Physics.body('asteroid', {
+            var asteroidTypes = [
+                'asteroid-m',
+                'asteroid-s',
+                'asteroid-c'
+            ];
+            var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
+
+            asteroids.push( Physics.body(asteroidTypes[randomAsteroid], {
                 x: 400 + Math.cos( ang ) * r,
                 y: 300 + Math.sin( ang ) * r,
                 vx: 0.03 * Math.sin( ang ),
@@ -96,17 +108,6 @@ require(
                 restitution: 0.6
             }));
         }
-
-        //var planet = Physics.body('circle', {
-            // fixed: true,
-            // hidden: true,
-        //    mass: 10000,
-        //   radius: 140,
-        //    x: 400,
-        //    y: 300
-        //});
-        //planet.view = new Image();
-        //planet.view.src = require.toUrl('images/planet.png');
 
         // render on every step
         world.subscribe('step', function(){
@@ -130,12 +131,26 @@ require(
             }
         });
 
-        var points = 0;
-        document.getElementById('score').innerHTML=points;
-        world.subscribe('collect-point', function( data ){
-            
-            points++;
-            document.getElementById('score').innerHTML=points;
+        var points = {};
+        points.score1 = 0;
+        points.score2 = 0;
+        points.score3 = 0;
+        document.getElementById('score1').innerHTML=points.score1;
+        document.getElementById('score2').innerHTML=points.score2;
+        document.getElementById('score3').innerHTML=points.score3;
+
+        world.subscribe('collect-point', function( point ){
+
+            if (point.body == 'score1') {
+                points.score1++;
+                document.getElementById('score1').innerHTML=points.score1;
+            } else if (point.body == 'score2') {
+                points.score2++;
+                document.getElementById('score2').innerHTML=points.score2;
+            } else if (point.body == 'score3') {
+                points.score3++;
+                document.getElementById('score3').innerHTML=points.score3;
+            }
             
         });
 
@@ -166,26 +181,23 @@ require(
                     if ( col.bodyA.blowUp ){
                         col.bodyA.blowUp();
                         world.removeBody( col.bodyB );
-                    } else if ( col.bodyB.blowUp ){
+                    } else {
+                        world.removeBody( col.bodyA );
+                    }
+                    if ( col.bodyB.blowUp ){
                         col.bodyB.blowUp();
                         world.removeBody( col.bodyA );
+                    } else {
+                        world.removeBody( col.bodyB );
                     }
                     return;
                 }
                 if ( col.bodyA.gameType === 'ship' || col.bodyB.gameType === 'ship' ){
-                    if ( col.bodyA.gameType === 'debris' ) {
-                        world.removeBody( col.bodyA );
-                        world.publish({
-                            topic: 'collect-point', 
-                            body: self
-                        });
+                    if ( col.bodyA.gameType === 'pickup' ) {
+                        col.bodyA.collect();
                         return;
-                    } else if (col.bodyB.gameType === 'debris' ){
-                        world.removeBody( col.bodyB );
-                        world.publish({
-                            topic: 'collect-point', 
-                            body: self
-                        });
+                    } else if (col.bodyB.gameType === 'pickup' ){
+                        col.bodyB.collect();
                         return;
                     }
                 }
@@ -253,6 +265,7 @@ require(
 
         world = Physics( init );
         world.subscribe('lose-game', function(){
+            world.pause();
             document.body.className = 'lose-game';
             inGame = false;
         });

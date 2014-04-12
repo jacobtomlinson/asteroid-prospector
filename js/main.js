@@ -19,8 +19,9 @@ require(
     'js/asteroids/asteroid-s',
     'js/asteroids/asteroid-m',
     'js/pickups/pickup-c',
-    'js/pickups/pickup-s',
-    'js/pickups/pickup-m',
+    'js/pickups/pickup-f',
+    'js/pickups/pickup-p',
+    'js/pickups/pickup-w',
 
     // official modules
     'physicsjs/renderers/canvas',
@@ -85,10 +86,10 @@ require(
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
         
         var asteroids = [];
-        for ( var i = 0, l = 200; i < l; ++i ){
+        for ( var i = 0, l = 50; i < l; ++i ){
 
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 200 + 100 * Math.random() + i * 30;
+            var r = 200 + 100 * Math.random() + i * 20;
 
             var asteroidTypes = [
                 'asteroid-m',

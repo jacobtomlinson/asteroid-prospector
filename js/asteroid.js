@@ -9,7 +9,7 @@ define(
         Physics
     ){
 
-        Physics.body('ufo', 'circle', function( parent ){
+        Physics.body('asteroid', 'circle', function( parent ){
             var ast1 = new Image();
             ast1.src = require.toUrl('images/asteroid.png');
 

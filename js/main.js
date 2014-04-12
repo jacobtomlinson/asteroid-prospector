@@ -15,7 +15,7 @@ require(
     // custom modules
     'js/player',
     'js/player-behavior',
-    'js/ufo',
+    'js/asteroid',
 
     // official modules
     'physicsjs/renderers/canvas',
@@ -79,13 +79,13 @@ require(
 
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
         
-        var ufos = [];
+        var asteroids = [];
         for ( var i = 0, l = 30; i < l; ++i ){
 
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
             var r = 700 + 100 * Math.random() + i * 10;
 
-            ufos.push( Physics.body('ufo', {
+            asteroids.push( Physics.body('asteroid', {
                 x: 400 + Math.cos( ang ) * r,
                 y: 300 + Math.sin( ang ) * r,
                 vx: 0.03 * Math.sin( ang ),
@@ -120,12 +120,12 @@ require(
             world.render();
         });
 
-        // count number of ufos destroyed
+        // count number of asteroids destroyed
         var killCount = 0;
         world.subscribe('blow-up', function( data ){
             
             killCount++;
-            if ( killCount === ufos.length ){
+            if ( killCount === asteroids.length ){
                 world.publish('win-game');
             }
         });
@@ -238,7 +238,7 @@ require(
             Physics.behavior('body-impulse-response'),
             renderer
         ]);
-        world.add( ufos );
+        world.add( asteroids );
     };
 
     var world = null;

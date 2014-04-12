@@ -21,7 +21,7 @@ define(
                     this.view = ast1;
                 },
                 blowUp: function(){
-                   parent.blowUp.call(this, "pickup-m");
+                   parent.blowUp.call(this, "pickup-f");
                 }
             };
         });

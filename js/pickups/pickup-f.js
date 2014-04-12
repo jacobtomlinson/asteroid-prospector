@@ -9,18 +9,18 @@ define(
         Physics
     ){
 
-        Physics.body('pickup-m', 'pickup', function( parent ){
-            //var ast1 = new Image();
-            //ast1.src = require.toUrl('images/asteroid.png');
+        Physics.body('pickup-f', 'pickup', function( parent ){
+            var ast1 = new Image();
+            ast1.src = require.toUrl('images/pickupF.png');
 
             return {
                 init: function( options ){
                     parent.init.call(this, options);
 
-                    //this.view = ast1;
+                    this.view = ast1;
                 },
                 collect: function (){
-                   parent.collect.call(this, "score3");
+                   parent.collect.call(this, "score2");
                 }
             };
         });

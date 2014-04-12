@@ -2,17 +2,16 @@ define(
     [
         'require',
         'physicsjs',
-        'js/asteroids/asteroid'
-        //'physicsjs/bodies/circle'
+        'js/pickups/pickup',
     ],
     function(
         require,
         Physics
     ){
 
-        Physics.body('asteroid-s', 'asteroid', function( parent ){
+        Physics.body('pickup-p', 'pickup', function( parent ){
             var ast1 = new Image();
-            ast1.src = require.toUrl('images/asteroidS1.png');
+            ast1.src = require.toUrl('images/pickupP.png');
 
             return {
                 init: function( options ){
@@ -20,8 +19,8 @@ define(
 
                     this.view = ast1;
                 },
-                blowUp: function(){
-                    parent.blowUp.call(this, "pickup-p");
+                collect: function (){
+                   parent.collect.call(this, "score3");
                 }
             };
         });

@@ -25,6 +25,10 @@ html {
 	background-repeat: no-repeat;
 }
 
+#header a {
+	color: #EDEBEB;
+}
+
 #sidebar {
 	position: fixed;
 	margin-top: 100px;
@@ -53,7 +57,10 @@ html {
 	max-width: 640px;
 }
 
+#versionTable li {
+	list-style: none;
+}
+
 #footer {
 	width: auto;
-	
 }

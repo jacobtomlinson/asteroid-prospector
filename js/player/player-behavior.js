@@ -94,10 +94,10 @@ define(
                     for ( var i = 0, l = collisions.length; i < l; ++i ){
                         col = collisions[ i ];
 
-                        // if we aren't looking at debris
+                        // if we aren't looking at pickups
                         // and one of these bodies is the player...
-                        if ( col.bodyA.gameType !== 'debris' && 
-                            col.bodyB.gameType !== 'debris' && 
+                        if ( col.bodyA.gameType !== 'pickup' && 
+                            col.bodyB.gameType !== 'pickup' && 
                             (col.bodyA === player || col.bodyB === player) 
                         ){
                             if ( col.bodyA.gameType === 'base' ||

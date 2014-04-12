@@ -13,6 +13,7 @@ require(
     'physicsjs',
 
     // custom modules
+    'js/gamestate',
     'js/player/player',
     'js/player/player-behavior',
     'js/asteroids/asteroid-c',
@@ -34,6 +35,10 @@ require(
     require,
     Physics
 ){
+
+
+	var gamestate = new GameState();
+
     // display start game message
     document.body.className = 'before-game';
     var inGame = false;
@@ -72,6 +77,8 @@ require(
 
     var init = function init( world, Physics ){
 
+    	world.options({timestep: 1000/10}); // set the physics resolution to 30 fps
+
         // bodies
         var ship = Physics.body('player', {
             x: 400,
@@ -83,9 +90,9 @@ require(
         ship.gameType = 'ship';
 
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
-        
+
         var asteroids = [];
-        for ( var i = 0, l = 200; i < l; ++i ){
+        for ( var i = 0, l = 20; i < l; ++i ){
 
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
             var r = 200 + 100 * Math.random() + i * 30;
@@ -112,8 +119,8 @@ require(
         // render on every step
         world.subscribe('step', function(){
             // middle of canvas
-            var middle = { 
-                x: 0.5 * window.innerWidth, 
+            var middle = {
+                x: 0.5 * window.innerWidth,
                 y: 0.5 * window.innerHeight
             };
             // follow player
@@ -124,7 +131,7 @@ require(
         // count number of asteroids destroyed
         var killCount = 0;
         world.subscribe('blow-up', function( data ){
-            
+
             killCount++;
             if ( killCount === asteroids.length ){
                 world.publish('win-game');
@@ -135,23 +142,10 @@ require(
         points.score1 = 0;
         points.score2 = 0;
         points.score3 = 0;
-        document.getElementById('score1').innerHTML=points.score1;
-        document.getElementById('score2').innerHTML=points.score2;
-        document.getElementById('score3').innerHTML=points.score3;
+
 
         world.subscribe('collect-point', function( point ){
-
-            if (point.body == 'score1') {
-                points.score1++;
-                document.getElementById('score1').innerHTML=points.score1;
-            } else if (point.body == 'score2') {
-                points.score2++;
-                document.getElementById('score2').innerHTML=points.score2;
-            } else if (point.body == 'score3') {
-                points.score3++;
-                document.getElementById('score3').innerHTML=points.score3;
-            }
-            
+        	gamestate.setScore(score);
         });
 
         var time = 60;
@@ -161,7 +155,7 @@ require(
             document.getElementById('time').innerHTML=time;
             if (time <= 0){
                 world.publish({
-                    topic: 'lose-game', 
+                    topic: 'lose-game',
                     body: self
                 });
                 clearInterval(countDown);
@@ -260,10 +254,12 @@ require(
             world.destroy();
         }
 
-
         //time = 5;
 
         world = Physics( init );
+
+        gamestate.setWorld(world);
+
         world.subscribe('lose-game', function(){
             world.pause();
             document.body.className = 'lose-game';
@@ -279,7 +275,7 @@ require(
     // subscribe to ticker and start looping
     Physics.util.ticker.subscribe(function( time ){
         if (world){
-            world.step( time ); 
+            world.step( time );
         }
     }).start();
 });

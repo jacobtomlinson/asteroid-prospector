@@ -16,7 +16,7 @@ define(
             var shipImg = new Image();
             //var shipThrustImg = new Image();
             shipImg.src = require.toUrl('images/ship.png');
-            //shipThrustImg.src = require.toUrl('images/ship-thrust.png');
+            shipThrustImg.src = require.toUrl('images/ship-thrust.png');
 
             var Pi2 = 2 * Math.PI;
             // VERY crude approximation to a gaussian random number.. but fast
@@ -89,9 +89,9 @@ define(
 
                     // if we're accelerating set the image to the one with the thrusters on
                     if ( amount ){
-                        //this.view = shipThrustImg;
+                        this.view = shipThrustImg;
                     } else {
-                        //this.view = shipImg;
+                        this.view = shipImg;
                     }
                     return self;
                 },

@@ -53,10 +53,8 @@ define(
                                 usePickup = key;
                                 break;
                               }
-                              console.log(pickupProb);
                             }
                         }
-                        console.log(usePickup);
                         d = Physics.body(usePickup, {
                             x: pos.get(0) + rnd.get(0),
                             y: pos.get(1) + rnd.get(1),

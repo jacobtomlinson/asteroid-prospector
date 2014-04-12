@@ -146,7 +146,8 @@ require(
 
 
         world.subscribe('collect-point', function( point ){
-        	gamestate.setScore(score);
+            points.score1 += 1;
+        	gamestate.setScore(points.score1);
         });
 
         var time = 60;

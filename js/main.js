@@ -78,8 +78,8 @@ require(
 
     var init = function init( world, Physics ){
 
-    	//world.options({timestep: 1000/10});
-    	world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
+    	world.options({timestep: 1000/10});
+    	//world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
 
         // bodies
         var ship = Physics.body('player', {
@@ -128,7 +128,7 @@ require(
         });
         mainbase.gameType = 'base';
         mainbase.view = new Image();
-        mainbase.view.src = require.toUrl('images/ufo.png');
+        mainbase.view.src = require.toUrl('images/station.png');
 
 
         // render on every step

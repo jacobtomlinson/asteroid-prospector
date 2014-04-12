@@ -1,0 +1,55 @@
+html {
+	
+}
+
+body{
+	color: #EDEBEB;
+	background-image:url("../webimages/asteroid.png");
+}
+
+#wrap {
+	width: 1000px;
+}
+
+#header {
+	position: fixed;
+	padding-left: 40px;
+	background-color:rgba(0,0,0,1);
+	width: 100%;
+	background-image:url("../webimages/sprite1.png");
+	background-position:right;
+	background-repeat: no-repeat;
+}
+
+#sidebar {
+	position: fixed;
+	margin-top: 100px;
+	background-color:rgba(0,0,0,0.75);
+	float: left;
+}
+
+#sidebar li {
+	list-style: none;
+}
+
+#sidebar h6 {
+	margin-left: 40px;
+}
+
+#main {
+	background-color:rgba(0,0,0,0.6);
+	padding-top: 75px;
+	max-width: 800px;
+	margin-bottom: 40px;
+	#max-width: 1024px;
+	float: right;
+}
+	
+#progress {
+	max-width: 640px;
+}
+
+#footer {
+	width: auto;
+	
+}

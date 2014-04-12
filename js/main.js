@@ -105,7 +105,7 @@ require(
         }
 
         var mainbase = Physics.body('circle', {
-            // fixed: true,
+            fixed: true,
             // hidden: true,
             mass: 1000,
             radius: 30,
@@ -163,18 +163,22 @@ require(
             for ( var i = 0, l = collisions.length; i < l; ++i ){
                 col = collisions[ i ];
 
-                if ( col.bodyA.gameType === 'laser' || col.bodyB.gameType === 'laser' ){
+                if ( col.bodyA.gameType === 'laser' || col.bodyB.gameType === 'laser'){
                     if ( col.bodyA.blowUp ){
                         col.bodyA.blowUp();
                         world.removeBody( col.bodyB );
                     } else {
-                        world.removeBody( col.bodyA );
+                        if (col.bodyA.gameType !== 'base'){
+                            world.removeBody( col.bodyA );
+                        }
                     }
                     if ( col.bodyB.blowUp ){
                         col.bodyB.blowUp();
                         world.removeBody( col.bodyA );
                     } else {
-                        world.removeBody( col.bodyB );
+                        if (col.bodyB.gameType !== 'base'){
+                            world.removeBody( col.bodyB );
+                        }
                     }
                     return;
                 }

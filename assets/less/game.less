@@ -20,19 +20,47 @@ body:after {
 		margin-top: -70px;
 		border-radius: 5px;
 }
-body.before-game:after {
-		content: 'press "z" to start';
-}
-body.lose-game:after {
-		content: 'press "z" to try again';
-}
-body.win-game:after {
-		content: 'Win! press "z" to play again';
-}
+
 body {
 		background-color: #000040;
 }
 
 .overlay {
 		color: #FFFFFF;
+}
+
+.modal-dialog {
+    margin: 80px auto;
+}
+
+.btnContainer {
+	display:inline-block;
+	margin-top: 1em;
+	color:#fff;
+	#restartGameBtn {
+		display:none;
+	}
+}
+.scores {
+	display:inline-block;
+	margin-top: 1em;
+	color:#fff;
+	font-weight:bold;
+	margin-right:2em;
+	> span {
+		margin-right:1em;
+	}
+}
+
+
+.fuelbar {
+	margin-top: 1em;
+	color:#fff;
+	font-weight:bold;
+	margin-right:1em;
+	.progress {
+		display:inline-block; width:150px;
+		margin-bottom:0px;
+		 vertical-align: bottom;
+	}
 }

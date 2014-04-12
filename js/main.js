@@ -104,6 +104,19 @@ require(
             }));
         }
 
+        var mainbase = Physics.body('circle', {
+            // fixed: true,
+            // hidden: true,
+            mass: 1000,
+            radius: 30,
+            x: 400,
+            y: 300
+        });
+        mainbase.gameType = 'base';
+        mainbase.view = new Image();
+        mainbase.view.src = require.toUrl('images/station.png');
+
+
         // render on every step
         world.subscribe('step', function(){
             // middle of canvas
@@ -225,7 +238,7 @@ require(
         world.add([
             ship,
             playerBehavior,
-            //planet,
+            mainbase,
             Physics.behavior('newtonian', { strength: 1e-4 }),
             Physics.behavior('sweep-prune'),
             Physics.behavior('body-collision-detection'),

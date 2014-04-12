@@ -78,7 +78,8 @@ require(
 
     var init = function init( world, Physics ){
 
-    	world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
+    	world.options({timestep: 1000/10});
+    	//world.options({timestep: 1000/60}); // set the physics resolution to 30 fps
 
         // bodies
         var ship = Physics.body('player', {
@@ -116,6 +117,19 @@ require(
                 restitution: 0.6
             }));
         }
+
+        var mainbase = Physics.body('circle', {
+            // fixed: true,
+            // hidden: true,
+            mass: 1000,
+            radius: 30,
+            x: 400,
+            y: 300
+        });
+        mainbase.gameType = 'base';
+        mainbase.view = new Image();
+        mainbase.view.src = require.toUrl('images/station.png');
+
 
         // render on every step
         world.subscribe('step', function(){
@@ -238,7 +252,7 @@ require(
         world.add([
             ship,
             playerBehavior,
-            //planet,
+            mainbase,
             Physics.behavior('newtonian', { strength: 1e-4 }),
             Physics.behavior('sweep-prune'),
             Physics.behavior('body-collision-detection'),

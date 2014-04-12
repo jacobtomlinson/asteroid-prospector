@@ -12,7 +12,7 @@ define(
 
         Physics.body('asteroid-m', 'asteroid', function( parent ){
             var ast1 = new Image();
-            ast1.src = require.toUrl('images/asteroid.png');
+            ast1.src = require.toUrl('images/asteroidM1.png');
 
             return {
                 init: function( options ){

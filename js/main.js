@@ -103,7 +103,7 @@ require(
                 vx: 0.03 * Math.sin( ang ),
                 vy: - 0.03 * Math.cos( ang ),
                 angularVelocity: (Math.random() - 0.5) * 0.001,
-                radius: 20,
+                radius: 40,
                 mass: 30,
                 restitution: 0.6
             }));

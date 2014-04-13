@@ -37,8 +37,7 @@ require(
     Physics
 ){
 
-
-	gamestate = new GameState();
+    gamestate = new GameState();
 
     // set up the renderer and point it to the viewport
     var renderer = Physics.renderer('canvas', {
@@ -63,9 +62,12 @@ require(
         }
     });
 
+    // create an asteroid
     function spawnAsteroid(Physics, world, ship, renderer){
         var x = 0;
         var y = 0;
+
+        // find a location for the new asteroid that's not on the screen
         while (x == 0 && y == 0 || ( 
             x > ship.state.pos.get(0) - (renderer.options.width / 2) && 
             x < ship.state.pos.get(0) + (renderer.options.width / 2) && 
@@ -78,11 +80,14 @@ require(
             y = 300 + Math.sin( ang ) * r;
         }
 
+        // set distribution of asteroid types (given as percentages)
         var asteroidTypes = {
             'asteroid-m': 8,
             'asteroid-s' : 17,
             'asteroid-c' : 75
         };
+    
+        // select type of asteroid to be created
         var randomAsteroid = Math.floor(Math.random() * 100);
 
         for (key in asteroidTypes) {
@@ -93,6 +98,7 @@ require(
               }
         }
 
+        // create the asteroid
         var asteroid = Physics.body(useAsteroid, {
             x: x,
             y: y,
@@ -116,7 +122,7 @@ require(
 
     	world.options({timestep: 1000/30}); // set the physics resolution to 30 fps
 
-        // bodies
+        // create spaceship which will be controlled by the user
         var ship = Physics.body('player', {
             x: 400,
             y: 100,
@@ -128,11 +134,13 @@ require(
 
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
 
+        // create asteroids at distrubuted randomly-ish around the map
         var asteroids = [];
         for ( var i = 0, l = 50; i < l; ++i ){
             spawnAsteroid(Physics, world, ship, renderer);
         }
 
+        // create the main base
         var mainbase = Physics.body('circle', {
             fixed: true,
             // hidden: true,
@@ -144,7 +152,6 @@ require(
         mainbase.gameType = 'base';
         mainbase.view = new Image();
         mainbase.view.src = require.toUrl('images/station.png');
-
 
         // render on every step
         world.subscribe('step', function(){
@@ -178,7 +185,7 @@ require(
            gamestate.useFuel(1);
         },1000);
 
-        // blow up anything that touches a laser pulse
+        // take action when a collision is detected
         world.subscribe('collisions:detected', function( data ){
             var collisions = data.collisions
                 ,col
@@ -187,6 +194,7 @@ require(
             for ( var i = 0, l = collisions.length; i < l; ++i ){
                 col = collisions[ i ];
 
+                // blow up anything that touches a laser pulse apart from the base
                 if ( col.bodyA.gameType === 'laser' || col.bodyB.gameType === 'laser'){
                     if ( col.bodyA.blowUp ){
                         col.bodyA.blowUp();
@@ -206,6 +214,7 @@ require(
                     }
                     return;
                 }
+                // collect the pickups if the ship collides with them
                 if ( col.bodyA.gameType === 'ship' || col.bodyB.gameType === 'ship' ){
                     if ( col.bodyA.gameType === 'pickup' ) {
                         col.bodyA.collect();
@@ -279,7 +288,8 @@ require(
     };
 
     var world = null;
-     newGame = function newGame(){
+    // reset for a new game
+    newGame = function newGame(){
 
         if (world){
             world.destroy();

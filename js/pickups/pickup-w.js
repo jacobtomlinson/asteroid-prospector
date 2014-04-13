@@ -1,3 +1,7 @@
+/**
+ * Define a waste pickup object, inheriting from pickup
+ */
+
 define(
     [
         'require',

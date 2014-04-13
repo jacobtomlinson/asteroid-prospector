@@ -1,3 +1,8 @@
+/**
+ * Define a metallic asteroid object, inheriting from asteroid
+ * Specifies what resources it contains (i.e. distribution of pickups)
+ */
+
 define(
     [
         'require',

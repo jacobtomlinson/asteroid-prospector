@@ -395,7 +395,7 @@ GameState.prototype.checkAchievements = function () {
 			});
 	  }
   }
-  if (this._shipCargo.preciousMetals + this._gameScore.preciousMetals >= 10) {
+  if (this._shipCargo.preciousMetals.length + this._gameScore.preciousMetals >= 10) {
 	  if (this.achievements.achievement_p.achieved == false) {
 		  this.achievements.achievement_p.achieved = true;
 		  gamestate.pause();
@@ -409,7 +409,7 @@ GameState.prototype.checkAchievements = function () {
 		  });
 	  }
   }
-  if (this._shipCargo.constructionMaterials + this._gameScore.constructionMaterials >= 15) {
+  if (this._shipCargo.constructionMaterials.length + this._gameScore.constructionMaterials >= 15) {
 	  if (this.achievements.achievement_c.achieved == false) {
 		  this.achievements.achievement_c.achieved = true;
 		  gamestate.pause();

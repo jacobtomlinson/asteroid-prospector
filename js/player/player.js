@@ -17,6 +17,8 @@ define(
             var shipThrustImg = new Image();
             shipImg.src = require.toUrl('images/ship.png');
             shipThrustImg.src = require.toUrl('images/ship-thrust.png');
+            var podImg = new Image();
+            podImg.src = require.toUrl('images/pod.png');
 
             var Pi2 = 2 * Math.PI;
             // VERY crude approximation to a gaussian random number.. but fast
@@ -172,6 +174,24 @@ define(
                             debris.push( d );
                         }
                     }
+
+                    rnd.set( Math.random() - 0.5, Math.random() - 0.5 ).mult( r );
+                    d = Physics.body('circle', {
+                        x: pos.get(0) + rnd.get(0),
+                        y: pos.get(1) + rnd.get(1),
+                        // velocity of debris is same as player
+                        vx: this.state.vel.get(0),
+                        vy: this.state.vel.get(1),
+                        // set a random angular velocity for dramatic effect
+                        angularVelocity: (Math.random()-0.5) * 0.006,
+                        mass: 1,
+                        size: 10,
+                        // not tooo bouncy
+                        restitution: 0.8
+                    });
+                    d.gameType = 'pod';
+                    d.view = podImg;
+                    world.add( d );
 
                     // add debris
                     world.add( debris );

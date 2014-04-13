@@ -9,7 +9,7 @@ This project is a solution to the following challenge created by Dr. Phil Metzge
 >Develop a game to travel across the solar system going from asteroid to asteroid. The strategy is to decide which asteroid to visit and mine next, given a field of asteroids that vary in location, composition, size, and more. A major part of this challenge is learning over the course of the International Space Apps Weekend what the purpose and value of an asteroid resource utilization/industry could be and incorporating it into the game.
 
 ### Our Approach
-One of the key things we wanted to achieve was to build something very basic quickly and get it published. Then we added lots of extra functionality in small pieces, always making sure the game was playable. Similar to agile development but we wanted to avoid using th work agile as we didn't want to get wrapped up in "what agile is".
+One of the key things we wanted to achieve was to build something very basic quickly and get it published. Then we added lots of extra functionality in small pieces, always making sure the game was playable. Similar to agile development but we wanted to avoid using the word agile as we didn't want to get wrapped up in what "agile" is.
 
 ## The Game
 
@@ -76,5 +76,10 @@ The APE Mining Corp, the largest mining conglomerate in the solar system, is now
 
 ### Translations
 
- * Elena Meneguz - IT
- * Karina Williams - DE
+ * Elena Meneguz - Italian
+ * Karina Williams - German
+ * Ketaki Sharma - Hindi
+ 
+### Project Management
+ 
+ * Ian Gentry

@@ -1,3 +1,7 @@
+/**
+ * Define a basic asteroid object, with function blowUp to disintegrate it into pickups 
+ */
+
 define(
     [
         'require',
@@ -19,6 +23,8 @@ define(
 
                     this.view = ast1;
                 },
+                // blowUp describes what happens to an asteroid when it gets hit by a laser
+                // i.e. it disintegrates into pickups
                 blowUp: function(pickup){
                     pickup = typeof pickup !== 'undefined' ? pickup : {"pickup" : 100};
                     var self = this;
@@ -71,7 +77,8 @@ define(
 
                         pickups.push( d );
                     }
-
+                    
+                    // the pickups disappear if they're not collected soon enough
                     setTimeout(function(){
                         for ( var i = 0, l = pickups.length; i < l; ++i ){
                             world.removeBody( pickups[ i ] );

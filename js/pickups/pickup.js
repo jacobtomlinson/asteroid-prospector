@@ -1,3 +1,8 @@
+/**
+ * Define a basic pickup object, with function 'collect' that removes the pickup once it 
+ * has been collected by the ship and say how much points it was worth
+ */
+
 define(
     [
         'require',

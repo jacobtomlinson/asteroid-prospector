@@ -1,3 +1,7 @@
+/**
+ * Define a fuel pickup object, inheriting from pickup
+ */
+
 define(
     [
         'require',

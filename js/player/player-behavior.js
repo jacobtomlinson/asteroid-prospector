@@ -109,11 +109,13 @@ define(
                             col.bodyB.gameType !== 'pickup' && 
                             (col.bodyA === player || col.bodyB === player) 
                         ){
+                            // collisions with the base should dock the spaceship
                             if ( col.bodyA.gameType === 'base' ||
                                  col.bodyB.gameType === 'base'
                             ){
                               gamestate.onDock()
                             }
+                            // collisions with anything else should blow up the spaceship
                             else{
                               player.blowUp();
                               world.removeBehavior( this );

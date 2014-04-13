@@ -57,7 +57,7 @@ require(
             'convex-polygon' : {
                 strokeStyle: 'rgb(60, 0, 0)',
                 lineWidth: 1,
-                fillStyle: 'rgb(60, 16, 11)',
+                fillStyle: 'rgb(255, 0, 0)',
                 angleIndicator: false
             }
         }

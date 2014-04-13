@@ -36,20 +36,20 @@ function GameState() {
 	this.cashValues = {
 			// values in $1000s
 			preciousMetals: [
-				{value: 50},
-				{value: 80},
-				{value: 120},
-				{value: 150},
-				{value: 300},
-				{value: 600}
+				{value: 50, name: 'ruthenium'},
+				{value: 80, name: 'rhodium' },
+				{value: 120, name: 'gold'},
+				{value: 150, name: 'palladium'},
+				{value: 300, name: 'iridium'},
+				{value: 600, name: 'platinum'}
 			],
 			constructionMaterials: [
-				{value: 40},
-				{value: 100},
-				{value: 200},
-				{value: 250},
-				{value: 400},
-				{value: 500},
+				{value: 40, name: 'nitrogen'},
+				{value: 100, name: 'iron'},
+				{value: 200, name: 'silicon'},
+				{value: 250, name: 'magnesium'},
+				{value: 400, name: 'aluminium'},
+				{value: 500, name: 'nickel'},
 			],
 			waste: 5
 	};
@@ -117,6 +117,13 @@ GameState.prototype.gameOver = function(reason) {
 		keyboard: false,
 		show:true
 	});
+
+	$('#gameOver .finalscore span').html(gamestate._money);
+	$('#gameOver .finalscore .preciousMetals').html(gamestate._gameScore.preciousMetals);
+	$('#gameOver .finalscore .constructionMaterials').html(gamestate._gameScore.constructionMaterials);
+	$('#gameOver .finalscore .waste').html(gamestate._gameScore.waste);
+
+	// let the world keep on running
 	this._world.unpause();
 };
 
@@ -171,21 +178,90 @@ GameState.prototype.onDock = function(dockingObject) {
 
   var score = 0;
 
+  // increment gamescore
+  this._gameScore.preciousMetals 			+= this._shipCargo.preciousMetals.length;
+  this._gameScore.constructionMaterials 	+= this._shipCargo.constructionMaterials.length;
+  this._gameScore.waste 					+= this._shipCargo.waste;
+
+  // reset materials counts
+  for (i=0; i<this.cashValues.preciousMetals.length; i++) {
+	this.cashValues.preciousMetals[i].count = 0;
+  }
+  for (i=0; i<this.cashValues.constructionMaterials.length; i++) {
+	this.cashValues.constructionMaterials[i].count = 0;
+  }
+
   for (i=0; i<this._shipCargo.preciousMetals.length; i++) {
 	  var pickupIndex = this._shipCargo.preciousMetals[i];
 	  score += this.cashValues.preciousMetals[pickupIndex-1].value;
+	  this.cashValues.preciousMetals[pickupIndex-1].count++;
   }
   for (i=0; i<this._shipCargo.constructionMaterials.length; i++) {
 	  var pickupIndex = this._shipCargo.constructionMaterials[i];
 	  score += this.cashValues.constructionMaterials[pickupIndex-1].value;
+	  this.cashValues.constructionMaterials[pickupIndex-1].count++;
   }
   score += (this._shipCargo.waste *  this.cashValues.waste);
 
   this._money += score;
 
-  alert('YOU GOT: '+  score);
+  if (score>0) {
+	gamestate.pause();
 
-  // display message
+	var html='';
+
+	html += '<div class="row">';
+
+	html += '<div class="col-sm-6"><h2><img src="images/pickupP.png"> Precious Metals</h2>';
+
+		html += '<table class="scores">';
+		html += '<thead><tr><th>Element</th><th>Picked Up</th><th>Cash</th></tr></thead>';
+		html += '<tbody>';
+
+		for (i=0; i<this.cashValues.preciousMetals.length; i++) {
+			var elementName = this.cashValues.preciousMetals[i].name;
+			var count = this.cashValues.preciousMetals[i].count;
+			var elementScore = count *  this.cashValues.preciousMetals[i].value;
+			html += '<tr><td class="element">'+elementName.toUpperCase()+'</td><td>'+count+'</td><td>$'+elementScore+'K</td></tr>';
+		}
+		html += '</tbody>';
+
+		html += '</table>';
+	html += '</div>'; //precious metals
+
+	html += '<div class="col-sm-6"><h2><img src="images/pickupC.png">  Construction Materials</h2>';
+
+		html += '<table class="scores">';
+		html += '<thead><tr><th>Element</th><th>Picked Up</th><th>Cash</th></tr></thead>';
+		html += '<tbody>';
+
+		for (i=0; i<this.cashValues.constructionMaterials.length; i++) {
+			var elementName = this.cashValues.constructionMaterials[i].name;
+			var count = this.cashValues.constructionMaterials[i].count;
+			var elementScore = count *  this.cashValues.constructionMaterials[i].value;
+			html += '<tr><td class="element">'+elementName.toUpperCase()+'</td><td>'+count+'</td><td>$'+elementScore+'K</td></tr>';
+		}
+		html += '</tbody>';
+
+		html += '</table>';
+	html += '</div>'; // construction
+
+	html += '</div>'; // row
+
+	html += '<h2>Cash Value: $'+ score +'K </h2>';
+
+	// display message
+	$('#gameModal').modal({
+		backdrop: 'static',
+		keyboard: true,
+		show:true
+	}).on('hidden.bs.modal', function (e) {
+		gamestate.unpause();
+	});
+	$('#gameModal .modal-body').html(html);
+	$('#gameModal .modal-title').html('<i class="glyphicon glyphicon-download"></i> Docking Complete. Resources transferred and converted to cash.');
+
+  }
 
   // reset cargo
   this._shipCargo.constructionMaterials = Array();
@@ -237,10 +313,15 @@ GameState.prototype.render = function() {
 
 	if (this.isPaused==true) return false;
 
-	$('#scores .preciousMetals span.badge').html(this._shipCargo.preciousMetals.length);
-	$('#scores .constructionMaterials span.badge').html(this._shipCargo.constructionMaterials.length);
-	$('#scores .waste span.badge').html(this._shipCargo.waste);
-	$('#scores .money span.badge').html(this._money);
+	$('#scores .preciousMetals span').html(this._shipCargo.preciousMetals.length);
+	$('#scores .constructionMaterials span').html(this._shipCargo.constructionMaterials.length);
+	$('#scores .waste span').html(this._shipCargo.waste);
+
+	if (this._money>0) {
+		$('#scores .money span.badge').html(this._money+'K');
+	} else {
+		$('#scores .money span.badge').html(0);
+	}
 
 	// update fuel gauge
 	$('#fuel .progress-bar ').attr('aria-valuenow',this._shipFuel).css('width', this._shipFuel+'%');

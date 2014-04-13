@@ -56,9 +56,9 @@
 					</div>
 
 					<div id="scores" class=" pull-right">
-						<span class="preciousMetals" data-toggle="tooltip" data-placement="bottom" title="Precious Metals are worth money"><span class="badge">0</span> METALS</span>
-						<span class="constructionMaterials"  data-toggle="tooltip" data-placement="bottom" title="Construction Materials can be used for building and colonisation"><span class="badge">0</span> CONSTRUCT</span>
-						<span class="waste" data-toggle="tooltip" data-placement="bottom" title="Waste is worthless, but it's bad to leave it flying around in space"><span class="badge">0</span> WASTE</span>
+						<span class="preciousMetals" data-toggle="tooltip" data-placement="bottom" title="Precious Metals are worth money"><img src="images/pickupP.png"> <span>0</span> </span>
+						<span class="constructionMaterials"  data-toggle="tooltip" data-placement="bottom" title="Construction Materials can be used for building and colonisation"><img src="images/pickupC.png"> <span>0</span></span>
+						<span class="waste" data-toggle="tooltip" data-placement="bottom" title="Waste is worthless, but it's bad to leave it flying around in space"><img src="images/pickupW.png"> <span>0</span></span>
 						<span class="money"><i class="glyphicon glyphicon-usd"></i> <span class="badge">0</span> CASH </span>
 					</div>
 
@@ -88,12 +88,21 @@
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h4 class="modal-title" id="label2">GAME OVER</h4>
+		        <h4 class="modal-title" id="label2"><i class="glyphicon glyphicon-remove-circle"></i> GAME OVER PILOT</h4>
 		      </div>
 		      <div class="modal-body">
-					<p>Escape pod launched.  Docking will commence automatically.  You still have quotas to meet - get back out there as soon as possible! </p>
+					<p><strong>Escape pod launched.</strong> Docking will commence automatically.</p>
+					<div class="finalscore well">
+		      	<h2>Your Final Score: <span>0</span></h2>
+		      	<h3>You managed to mine:</h3>
+		      	<p><img src="images/pickupP.png"> <span class="preciousMetals"></span> tonnes of precious metals</p>
+		      	<p><img src="images/pickupC.png"> <span class="constructionMaterials"></span> tonnes of construction materials</p>
+		      	<p><img src="images/pickupW.png"> ... and collected <span class="waste"></span> tonnes of waste!</p>
+		      </div>
+					<p>You still have quotas to meet - get back out there as soon as possible! </p>
 		      </div>
 		      <div class="modal-footer">
+		      	<a class="btn btn-success" href="game.html"><i class="glyphicon glyphicon-refresh"></i> Retry</a>
 		        <button type="button" class="btn" data-dismiss="modal">Close</button>
 		      </div>
 		    </div>
@@ -117,6 +126,21 @@
 		  </div>
 		</div>
 
+		<div id="gameModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="labelGameModal" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="labelGameModal">APE: Employee Handbook</h4>
+		      </div>
+		      <div class="modal-body">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<!-- Latest compiled and minified JavaScript -->

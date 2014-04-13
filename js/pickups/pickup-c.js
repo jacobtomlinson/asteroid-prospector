@@ -1,3 +1,7 @@
+/**
+ * Define a construction materials pickup object, inheriting from pickup
+ */
+
 define(
     [
         'require',

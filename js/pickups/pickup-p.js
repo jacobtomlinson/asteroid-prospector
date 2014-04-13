@@ -1,3 +1,7 @@
+/**
+ * Define a precious metals pickup object, inheriting from pickup
+ */
+
 define(
     [
         'require',

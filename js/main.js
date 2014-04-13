@@ -152,17 +152,17 @@ require(
         }
 
         // create saturn
-        var saturn = Physics.body('circle', {
-            fixed: true,
-            // hidden: true,
-            mass: 0,
-            radius: 0,
-            x: 1500,
-            y: -100
-        });
-        saturn.gameType = 'planet';
-        saturn.view = new Image();
-        saturn.view.src = require.toUrl('images/saturn.png');
+        //var saturn = Physics.body('circle', {
+        //    fixed: true,
+        //    // hidden: true,
+        //    mass: 0,
+        //    radius: 0,
+        //    x: 1500,
+        //    y: -100
+        //});
+        //saturn.gameType = 'planet';
+        //saturn.view = new Image();
+        //saturn.view.src = require.toUrl('images/saturn.png');
 
         // create the main base
         var mainbase = Physics.body('circle', {
@@ -300,7 +300,7 @@ require(
 
         // add things to the world
         world.add([
-            saturn,
+          //  saturn,
             mainbase,
             ship,
             playerBehavior,

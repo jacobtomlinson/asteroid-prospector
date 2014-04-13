@@ -54,6 +54,17 @@ function GameState() {
 			waste: 5
 	};
 
+	this.achievements =	{
+		achievement_w: {
+			achieved: false,
+	  },
+		achievement_p: {
+			achieved: false,
+		},
+	  achievement_c: {
+		  achieved: false,
+	  }
+	};
 
 }
 
@@ -75,33 +86,61 @@ GameState.prototype.setWorld = function(world) {
 GameState.prototype.bindUI = function() {
 
 	$('#handbook-mining').on('click',function() {
-		$('#gameHandbookModal').modal({
-			backdrop: 'static',
-			keyboard: false,
-			show:true
-		});
+		// load up mining info page in new tab
 	});
 	$('#handbook-company').on('click',function() {
 		$('#gameHandbookModal').modal({
 			backdrop: 'static',
 			keyboard: false,
 			show:true
+		}).on('hidden.bs.modal', function (e) {
+			gamestate.unpause();
 		});
+		gamestate.pause();
 	});
 	$('#handbook-achievements').on('click',function() {
-		$('#gameHandbookModal').modal({
+		$('#gameAchievementModal').modal({
 			backdrop: 'static',
 			keyboard: false,
 			show:true,
-			remote: 'res/handbook/achieve/list.html',
+		}).on('hidden.bs.modal', function (e) {
+			gamestate.unpause();
 		});
+		gamestate.pause();
 	});
 
+
+};
+
+GameState.prototype.togglePause = function () {
+		if (this.isPaused==false) {
+			this.pause();
+		} else {
+			this.unpause();
+		}
+}
+
+GameState.prototype.pause = function() {
+	this.isPaused=true;
+	this._world.pause();
+
+	$('#pause').addClass('active');
+	$('#fuel').removeClass('active');
+	this.render();
+};
+
+GameState.prototype.unpause = function() {
+	this.isPaused=false;
+	this._world.unpause();
+	$('#pause').removeClass('active');
+	$('#fuel').addClass('active');
+	this.render();
 };
 
 GameState.prototype.startGame = function () {
 	newGame();
 	this.unpause();
+	$('#pause').show();
 };
 
 /**
@@ -127,17 +166,7 @@ GameState.prototype.gameOver = function(reason) {
 	this._world.unpause();
 };
 
-GameState.prototype.pause = function() {
-	this.isPaused=true;
-	this._world.pause();
-	$('#fuel').removeClass('active');
-};
 
-GameState.prototype.unpause = function() {
-	this.isPaused=false;
-	this._world.unpause();
-	$('#fuel').addClass('active');
-};
 
 /**
  * When your ship picks up resources, add them by calling this function
@@ -334,11 +363,65 @@ GameState.prototype.render = function() {
 		$('#fuel .progress-bar').removeClass('progress-bar-danger').removeClass('progress-bar-warning');
 	}
 
+	if (this.isPaused) {
+		if (!($('#pause').hasClass('active'))) {
+			$('#pause').addClass('active');
+		}
+	} else {
+		if (($('#pause').hasClass('active'))) {
+			$('#pause').removeClass('active');
+		}
+	}
+
+
 };
 
 /**
  * Check our scores to see if we should be interrupting the game with new achievements
  */
 GameState.prototype.checkAchievements = function () {
+
+  if (this._shipCargo.waste + this._gameScore.waste >= 10) {
+	  if (this.achievements.achievement_w.achieved == false) {
+		  this.achievements.achievement_w.achieved = true;
+		  gamestate.pause();
+		  $('#achievement_w').addClass('achieved');
+		  $('#gameAchievementModal').modal({
+				backdrop: 'static',
+				keyboard: true,
+				show:true
+			}).on('hidden.bs.modal', function (e) {
+				gamestate.unpause();
+			});
+	  }
+  }
+  if (this._shipCargo.preciousMetals + this._gameScore.preciousMetals >= 10) {
+	  if (this.achievements.achievement_p.achieved == false) {
+		  this.achievements.achievement_p.achieved = true;
+		  gamestate.pause();
+		  $('#achievement_p').addClass('achieved');
+		  $('#gameAchievementModal').modal({
+			  backdrop: 'static',
+			  keyboard: true,
+			  show:true
+		  }).on('hidden.bs.modal', function (e) {
+			  gamestate.unpause();
+		  });
+	  }
+  }
+  if (this._shipCargo.constructionMaterials + this._gameScore.constructionMaterials >= 15) {
+	  if (this.achievements.achievement_c.achieved == false) {
+		  this.achievements.achievement_c.achieved = true;
+		  gamestate.pause();
+		  $('#achievement_c').addClass('achieved');
+		  $('#gameAchievementModal').modal({
+			  backdrop: 'static',
+			  keyboard: true,
+			  show:true
+		  }).on('hidden.bs.modal', function (e) {
+			  gamestate.unpause();
+		  });
+	  }
+  }
 
 };

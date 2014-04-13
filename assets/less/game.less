@@ -39,7 +39,8 @@ body {
 	display:inline-block;
 	margin-top: 1em;
 	color:#fff;
-	#restartGameBtn {
+	#restartGameBtn,
+	#pause {
 		display:none;
 	}
 }
@@ -75,4 +76,16 @@ table.scores {
 	.element {
 		font-weight:bold;
 	}
+}
+
+div.achievements {
+	div.row {
+		opacity:0.2;
+		i { opacity:0; }
+		&.achieved {
+			opacity:1;
+			i { opacity:1; }
+		}
+	}
+
 }

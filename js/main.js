@@ -66,12 +66,12 @@ require(
     function spawnAsteroid(Physics, world, ship, renderer){
         var x = 0;
         var y = 0;
-        while (x == 0 && y == 0 && 
+        while (x == 0 && y == 0 || ( 
             x > ship.state.pos.get(0) - (renderer.options.width / 2) && 
             x < ship.state.pos.get(0) + (renderer.options.width / 2) && 
             y > ship.state.pos.get(1) - (renderer.options.height / 2) && 
             y < ship.state.pos.get(1) + (renderer.options.height / 2) 
-            ){
+            )){
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
             var r = 400 + 400 * Math.random() + 100;
             x = 400 + Math.cos( ang ) * r;

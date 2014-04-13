@@ -13,9 +13,16 @@ require(
     'physicsjs',
 
     // custom modules
-    'js/player',
-    'js/player-behavior',
-    'js/asteroid',
+    'js/gamestate',
+    'js/player/player',
+    'js/player/player-behavior',
+    'js/asteroids/asteroid-c',
+    'js/asteroids/asteroid-s',
+    'js/asteroids/asteroid-m',
+    'js/pickups/pickup-c',
+    'js/pickups/pickup-f',
+    'js/pickups/pickup-p',
+    'js/pickups/pickup-w',
 
     // official modules
     'physicsjs/renderers/canvas',
@@ -29,18 +36,9 @@ require(
     require,
     Physics
 ){
-    // display start game message
-    document.body.className = 'before-game';
-    var inGame = false;
-    document.addEventListener('keydown', function( e ){
 
-        // if user presses spacebar inbetween games, we'll load a new game
-        if (!inGame && e.keyCode === 90){
-            document.body.className = 'in-game';
-            inGame = true;
-            newGame();
-        }
-    });
+
+	gamestate = new GameState();
 
     // set up the renderer and point it to the viewport
     var renderer = Physics.renderer('canvas', {
@@ -53,8 +51,8 @@ require(
             'circle': {
                 strokeStyle: 'rgb(0, 30, 0)',
                 lineWidth: 1,
-                fillStyle: 'rgb(100, 200, 50)',
-                angleIndicator: true
+                fillStyle: 'rgb(255, 255, 255)',
+                angleIndicator: false
             },
             'convex-polygon' : {
                 strokeStyle: 'rgb(60, 0, 0)',
@@ -65,7 +63,32 @@ require(
         }
     });
 
+    function spawnAsteroid(Physics, world){
+        var ang = 4 * (Math.random() - 0.5) * Math.PI;
+        var r = 400 + 400 * Math.random() + 100;
+
+        var asteroidTypes = [
+            'asteroid-m',
+            'asteroid-s',
+            'asteroid-c'
+        ];
+        var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
+
+        world.add( Physics.body(asteroidTypes[randomAsteroid], {
+            x: 400 + Math.cos( ang ) * r,
+            y: 300 + Math.sin( ang ) * r,
+            vx: 0.03 * Math.sin( ang ),
+            vy: - 0.03 * Math.cos( ang ),
+            angularVelocity: (Math.random() - 0.5) * 0.001,
+            radius: 40,
+            mass: 30,
+            restitution: 0.6
+        }));
+    }
+
     var init = function init( world, Physics ){
+
+    	world.options({timestep: 1000/30}); // set the physics resolution to 30 fps
 
         // bodies
         var ship = Physics.body('player', {
@@ -78,41 +101,30 @@ require(
         ship.gameType = 'ship';
 
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
-        
+
         var asteroids = [];
-        for ( var i = 0, l = 30; i < l; ++i ){
-
-            var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 700 + 100 * Math.random() + i * 10;
-
-            asteroids.push( Physics.body('asteroid', {
-                x: 400 + Math.cos( ang ) * r,
-                y: 300 + Math.sin( ang ) * r,
-                vx: 0.03 * Math.sin( ang ),
-                vy: - 0.03 * Math.cos( ang ),
-                angularVelocity: (Math.random() - 0.5) * 0.001,
-                radius: 20,
-                mass: 30,
-                restitution: 0.6
-            }));
+        for ( var i = 0, l = 50; i < l; ++i ){
+            spawnAsteroid(Physics, world);
         }
 
-        //var planet = Physics.body('circle', {
-            // fixed: true,
+        var mainbase = Physics.body('circle', {
+            fixed: true,
             // hidden: true,
-        //    mass: 10000,
-        //   radius: 140,
-        //    x: 400,
-        //    y: 300
-        //});
-        //planet.view = new Image();
-        //planet.view.src = require.toUrl('images/planet.png');
+            mass: 1000,
+            radius: 30,
+            x: 400,
+            y: 300
+        });
+        mainbase.gameType = 'base';
+        mainbase.view = new Image();
+        mainbase.view.src = require.toUrl('images/station.png');
+
 
         // render on every step
         world.subscribe('step', function(){
             // middle of canvas
-            var middle = { 
-                x: 0.5 * window.innerWidth, 
+            var middle = {
+                x: 0.5 * window.innerWidth,
                 y: 0.5 * window.innerHeight
             };
             // follow player
@@ -123,34 +135,21 @@ require(
         // count number of asteroids destroyed
         var killCount = 0;
         world.subscribe('blow-up', function( data ){
-            
+
             killCount++;
             if ( killCount === asteroids.length ){
                 world.publish('win-game');
             }
+
+            spawnAsteroid(Physics, world);
         });
 
-        var points = 0;
-        document.getElementById('score').innerHTML=points;
-        world.subscribe('collect-point', function( data ){
-            
-            points++;
-            document.getElementById('score').innerHTML=points;
-            
+        world.subscribe('collect-point', function( point ){
+            gamestate.pickup(point.body, 1);
         });
 
-        var time = 30;
-        document.getElementById('time').innerHTML=time;
         var countDown = setInterval(function(){
-            time --;
-            document.getElementById('time').innerHTML=time;
-            if (time <= 0){
-                world.publish({
-                    topic: 'lose-game', 
-                    body: self
-                });
-                clearInterval(countDown);
-            }
+           gamestate.useFuel(1);
         },1000);
 
         // blow up anything that touches a laser pulse
@@ -162,30 +161,31 @@ require(
             for ( var i = 0, l = collisions.length; i < l; ++i ){
                 col = collisions[ i ];
 
-                if ( col.bodyA.gameType === 'laser' || col.bodyB.gameType === 'laser' ){
+                if ( col.bodyA.gameType === 'laser' || col.bodyB.gameType === 'laser'){
                     if ( col.bodyA.blowUp ){
                         col.bodyA.blowUp();
                         world.removeBody( col.bodyB );
-                    } else if ( col.bodyB.blowUp ){
+                    } else {
+                        if (col.bodyA.gameType !== 'base'){
+                            world.removeBody( col.bodyA );
+                        }
+                    }
+                    if ( col.bodyB.blowUp ){
                         col.bodyB.blowUp();
                         world.removeBody( col.bodyA );
+                    } else {
+                        if (col.bodyB.gameType !== 'base'){
+                            world.removeBody( col.bodyB );
+                        }
                     }
                     return;
                 }
                 if ( col.bodyA.gameType === 'ship' || col.bodyB.gameType === 'ship' ){
-                    if ( col.bodyA.gameType === 'debris' ) {
-                        world.removeBody( col.bodyA );
-                        world.publish({
-                            topic: 'collect-point', 
-                            body: self
-                        });
+                    if ( col.bodyA.gameType === 'pickup' ) {
+                        col.bodyA.collect();
                         return;
-                    } else if (col.bodyB.gameType === 'debris' ){
-                        world.removeBody( col.bodyB );
-                        world.publish({
-                            topic: 'collect-point', 
-                            body: self
-                        });
+                    } else if (col.bodyB.gameType === 'pickup' ){
+                        col.bodyB.collect();
                         return;
                     }
                 }
@@ -207,9 +207,9 @@ require(
             var lightness;
 
             // draw the radar guides
-            renderer.drawCircle(x, y, r, { strokeStyle: '#090', fillStyle: '#010' });
-            //renderer.drawCircle(x, y, r * 2 / 3, { strokeStyle: '#090' });
-            //renderer.drawCircle(x, y, r / 3, { strokeStyle: '#090' });
+            renderer.drawCircle(x, y, r, { strokeStyle: '#B3B3B3', fillStyle: '#010' });
+            renderer.drawCircle(x, y, r * 2 / 3, { strokeStyle: '#B3B3B3' });
+            renderer.drawCircle(x, y, r / 3, { strokeStyle: '#B3B3B3' });
 
             for (var i = 0, l = data.bodies.length, b = data.bodies[ i ]; b = data.bodies[ i ]; i++){
 
@@ -231,42 +231,31 @@ require(
         world.add([
             ship,
             playerBehavior,
-            //planet,
+            mainbase,
             Physics.behavior('newtonian', { strength: 1e-4 }),
             Physics.behavior('sweep-prune'),
             Physics.behavior('body-collision-detection'),
             Physics.behavior('body-impulse-response'),
             renderer
         ]);
-        world.add( asteroids );
     };
 
     var world = null;
-    var newGame = function newGame(){
+     newGame = function newGame(){
 
         if (world){
             world.destroy();
         }
 
-
-        //time = 5;
-
         world = Physics( init );
-        world.subscribe('lose-game', function(){
-            document.body.className = 'lose-game';
-            inGame = false;
-        });
-        world.subscribe('win-game', function(){
-            world.pause();
-            document.body.className = 'win-game';
-            inGame = false;
-        });
+        gamestate.setWorld(world);
+
     };
 
     // subscribe to ticker and start looping
     Physics.util.ticker.subscribe(function( time ){
         if (world){
-            world.step( time ); 
+            world.step( time );
         }
     }).start();
 });

@@ -1,68 +1,164 @@
-<html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <style>
-        html, body {
-            padding: 0;
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        body:after {
-            font-size: 30px;
-            line-height: 140px;
-            text-align: center;
-            color: rgb(60, 16, 11);
-            background: rgba(255, 255, 255, 0.6);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 400px;
-            height: 140px;
-            margin-left: -200px;
-            margin-top: -70px;
-            border-radius: 5px;
-        }
-        body.before-game:after {
-            content: 'press "z" to start';
-        }
-        body.lose-game:after {
-            content: 'press "z" to try again';
-        }
-        body.win-game:after {
-            content: 'Win! press "z" to play again';
-        }
-        body {
-            background-color: #000037;
-        }
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>APE Mining Corporation</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        .overlay {
-            color: #FFFFFF;
-        }
-    </style>
-  </head>
-  <body>
-    <div class="overlay">Score: <span id="score"></span></div>
-    <div class="overlay">Time: <span id="time"></span></div>
-    <canvas id="viewport"></canvas>
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
-    <script src="js/require.js"></script>
-    <script src="js/main.js"></script>
-    <!-- Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		<!-- Less CSS code -->
+		<link rel="stylesheet/less" type="text/css" href="assets/less/game.less" />
+		<script src="lib/less/less-1.7.0.min.js" type="text/javascript"></script>
 
-      ga('create', 'UA-49829161-1', 'killfall.github.io');
-      ga('send', 'pageview');
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 
-    </script>
-  </body>
+	</head>
+	<body>
+
+		<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-header">
+					<a href="#" class="navbar-brand"><i class="glyphicon glyphicon-globe"></i> APE Mining Corporation</a>
+				</div>
+				<div class="navbar-collapse ">
+					<ul class="nav navbar-nav">
+						<li><a href="index.html"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+						<li class="active"><a href="game.html"><i class="glyphicon glyphicon-play"></i> Game</a></li>
+						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#handbook"><i class="glyphicon glyphicon-list-alt"></i> Employee Handbook
+							<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a id="handbook-company" href="#">			<i class="fa-building-o fa-static"></i> Company Messages</a></li>
+								<li><a id="handbook-achievements" href="#">	<i class="fa-certificate fa-static"></i> Achievements</a></li>
+								<li><a id="handbook-mining" href="#">				<i class="fa-static"></i> Mining Information</a></li>
+							</ul>
+						</li>
+					</ul>
+					<div class="btnContainer">
+						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" >Restart Game</a></li>
+					</div>
+
+					<div class="fuelbar pull-right">
+					FUEL
+						<div class="progress progress-striped" id="fuel">
+						  <div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+						    <span class="sr-only">100</span>
+						  </div>
+						</div>
+					</div>
+
+					<div id="scores" class=" pull-right">
+						<span class="preciousMetals" data-toggle="tooltip" data-placement="bottom" title="Precious Metals are worth money"><span class="badge">0</span> METALS</span>
+						<span class="constructionMaterials"  data-toggle="tooltip" data-placement="bottom" title="Construction Materials can be used for building and colonisation"><span class="badge">0</span> CONSTRUCT</span>
+						<span class="waste" data-toggle="tooltip" data-placement="bottom" title="Waste is worthless, but it's bad to leave it flying around in space"><span class="badge">0</span> WASTE</span>
+						<span class="money"><i class="glyphicon glyphicon-usd"></i> <span class="badge">0</span> CASH </span>
+					</div>
+
+				</div>
+		</div>
+
+		<canvas id="viewport"></canvas>
+
+		<div id="gameStartModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" id="label1">APE Mining Corp - company edict AE45221-B</h4>
+		      </div>
+		      <div class="modal-body">
+					<p>Hello freelance Mining Operative F-00125. Welcome aboard your Class 01 mining vessel.  </p>
+					<p>Use left and right arrows to rotate your ship, up arrow for thrust.  The spacebar will deploy mining drones.</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="gameStartBtn">Lets Start Mining!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div id="gameOver" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="label2" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" id="label2">GAME OVER</h4>
+		      </div>
+		      <div class="modal-body">
+					<p>Escape pod launched.  Docking will commence automatically.  You still have quotas to meet - get back out there as soon as possible! </p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div id="gameHandbookModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="label3" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="label3">APE: Employee Handbook</h4>
+		      </div>
+		      <div class="modal-body">
+					<p>Loading handbook ...</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript">
+		<!-- this is hacky JS namespacing stuff that we will fix when we get time! -->
+		var gamestate = null;
+		var newGame = null;
+		</script>
+
+		<script src="js/require.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/gamestate.js"></script>
+		<script type="text/javascript">
+		var gamestate = new GameState();
+		gamestate.init();
+
+			$(function() {
+				$('#gameStartModal').modal({
+					backdrop: 'static',
+					show:true
+				});
+
+				$('#gameStartBtn').on('click',function() {
+					$('#gameStartModal').modal('hide');
+					gamestate.startGame();
+				});
+			});
+		</script>
+	</body>
+
+	<!-- Google Analytics -->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-49829161-1', 'killfall.github.io');
+			ga('send', 'pageview');
+
+		</script>
+	</body>
 </html>
+

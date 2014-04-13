@@ -34,7 +34,7 @@ define(
                             case 39: // right
                                 player.turn( 1 );
                             break;
-                            case 90: // z
+                            case 32: // space
                                 player.shoot();
                             break;
                         }
@@ -56,7 +56,7 @@ define(
                             case 39: // right
                                 player.turn( 0 );
                             break;
-                            case 90: // z
+                            case 32: // space
                             break;
                         }
                         return false;
@@ -94,20 +94,28 @@ define(
                     for ( var i = 0, l = collisions.length; i < l; ++i ){
                         col = collisions[ i ];
 
-                        // if we aren't looking at debris
+                        // if we aren't looking at pickups
                         // and one of these bodies is the player...
-                        if ( col.bodyA.gameType !== 'debris' && 
-                            col.bodyB.gameType !== 'debris' && 
+                        if ( col.bodyA.gameType !== 'pickup' && 
+                            col.bodyB.gameType !== 'pickup' && 
                             (col.bodyA === player || col.bodyB === player) 
                         ){
-                            player.blowUp();
-                            world.removeBehavior( this );
-                            this.gameover = true;
+                            if ( col.bodyA.gameType === 'base' ||
+                                 col.bodyB.gameType === 'base'
+                            ){
+                              gamestate.onDock()
+                            }
+                            else{
+                              player.blowUp();
+                              world.removeBehavior( this );
+                              this.gameover = true;
 
-                            // when we crash, we'll publish an event to the world
-                            // that we can listen for to prompt to restart the game
-                            world.publish('lose-game');
-                            return;
+                              // when we crash, we'll publish an event to the world
+                              // that we can listen for to prompt to restart the game
+                              world.publish('lose-game');
+                              return;
+    
+                            }
                         }
                     }
                 },

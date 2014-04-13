@@ -19,7 +19,8 @@ define(
 
                     this.view = ast1;
                 },
-                blowUp: function(){
+                blowUp: function(pickup){
+                    pickup = typeof pickup !== 'undefined' ? pickup : {"pickup" : 100};
                     var self = this;
                     var world = self._world;
                     if (!world){
@@ -28,17 +29,33 @@ define(
                     var scratch = Physics.scratchpad();
                     var rnd = scratch.vector();
                     var pos = this.state.pos;
-                    var n = 40;
-                    var r = 2 * this.geometry.radius;
-                    var size = (r / n) * 2;
+                    var n = Math.floor(Math.random() * 4) + 2;
+                    var r = 40;
+                    var size = 10;
                     var mass = 0.001;
                     var d;
-                    var debris = [];
+                    var pickups = [];
+                    var first = true;
                     
-                    // create debris
+                    // create pickups
                     while ( n-- ){
-                        rnd.set( Math.random() - 0.5, Math.random() - 0.5 ).mult( r );
-                        d = Physics.body('circle', {
+                        rnd.set( Math.random() - 1, Math.random() - 1 ).mult( r );
+
+                        if (first){
+                            usePickup = "pickup-w"
+                            first = false;
+                        } else {
+                            pickupProb = Math.floor(Math.random() * 100);
+                            var usePickup = "pickup";
+                            for (var key in pickup) {
+                              pickupProb -= pickup[key];
+                              if (pickupProb <= 0){
+                                usePickup = key;
+                                break;
+                              }
+                            }
+                        }
+                        d = Physics.body(usePickup, {
                             x: pos.get(0) + rnd.get(0),
                             y: pos.get(1) + rnd.get(1),
                             //vx: this.state.vel.get(0) + (Math.random() - 0.5),
@@ -50,19 +67,19 @@ define(
                             radius: size,
                             restitution: 0.8
                         });
-                        d.gameType = 'debris';
+                        d.gameType = 'pickup';
 
-                        debris.push( d );
+                        pickups.push( d );
                     }
 
                     setTimeout(function(){
-                        for ( var i = 0, l = debris.length; i < l; ++i ){
-                            world.removeBody( debris[ i ] );
+                        for ( var i = 0, l = pickups.length; i < l; ++i ){
+                            world.removeBody( pickups[ i ] );
                         }
-                        debris = undefined;
-                    }, 5000);
+                        pickups = undefined;
+                    }, 10000);
 
-                    world.add( debris );
+                    world.add( pickups );
                     world.removeBody( self );
                     scratch.done();
                     world.publish({

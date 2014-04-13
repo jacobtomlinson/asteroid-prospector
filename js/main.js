@@ -155,7 +155,7 @@ require(
         var saturn = Physics.body('circle', {
             fixed: true,
             // hidden: true,
-            mass: 0,
+            mass: 0.001,
             radius: 0,
             x: 1500,
             y: -100

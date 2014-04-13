@@ -119,6 +119,10 @@ GameState.prototype.gameOver = function(reason) {
 	});
 
 	$('#gameOver .finalscore span').html(gamestate._money);
+	$('#gameOver .finalscore .preciousMetals').html(gamestate._gameScore.preciousMetals);
+	$('#gameOver .finalscore .constructionMaterials').html(gamestate._gameScore.constructionMaterials);
+	$('#gameOver .finalscore .waste').html(gamestate._gameScore.waste);
+
 	// let the world keep on running
 	this._world.unpause();
 };
@@ -177,7 +181,7 @@ GameState.prototype.onDock = function(dockingObject) {
   // increment gamescore
   this._gameScore.preciousMetals 			+= this._shipCargo.preciousMetals.length;
   this._gameScore.constructionMaterials 	+= this._shipCargo.constructionMaterials.length;
-  this._gameScore.waste 					+= this._shipCargo.waste.length;
+  this._gameScore.waste 					+= this._shipCargo.waste;
 
   // reset materials counts
   for (i=0; i<this.cashValues.preciousMetals.length; i++) {

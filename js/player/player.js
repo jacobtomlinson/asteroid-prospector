@@ -116,7 +116,7 @@ define(
                         y: this.state.pos.get(1) + r * sin,
                         vx: (1 + this.state.vel.get(0)) * cos,
                         vy: (1 + this.state.vel.get(1)) * sin,
-                        radius: 2
+                        radius: 3
                     });
                     // set a custom property for collision purposes
                     laser.gameType = 'laser';

@@ -43,7 +43,8 @@
 						</li>
 					</ul>
 					<div class="btnContainer">
-						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" >Restart Game</a></li>
+						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" ><i class="glyphicon glyphicon-refresh"></i> Retry</a>
+						<button class="btn btn-info btn-sm" id="pause" value="Pause Game" ><i class="glyphicon glyphicon-pause"></i> Pause</button>
 					</div>
 
 					<div class="fuelbar pull-right">
@@ -109,15 +110,51 @@
 		  </div>
 		</div>
 
-		<div id="gameHandbookModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="label3" aria-hidden="true">
+		<div id="gameAchievementModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="label3" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="label3">APE: Employee Handbook</h4>
+		        <h4 class="modal-title" id="label3"><i class="glyphicon glyphicon-certificate"></i> APE: Employee Achievements</h4>
 		      </div>
 		      <div class="modal-body">
-					<p>Loading handbook ...</p>
+
+					<div class="achievements">
+
+						<div class="row" id="achievement_p">
+							<div class="col-md-4">
+								<i class="glyphicon glyphicon-ok"></i>
+								Achievement: My Precious!
+							</div>
+							<div class="col-md-8">
+								<i class="glyphicon glyphicon-ok"></i>
+								Store 10 tonnes of precious metals
+							</div>
+						</div>
+
+						<div class="row" id="achievement_w">
+							<div class="col-md-4">
+
+								Achievement: Waste not want not
+							</div>
+							<div class="col-md-8">
+												<i class="glyphicon glyphicon-ok"></i>
+								Collect 10 tonnes of Waste
+							</div>
+						</div>
+
+						<div class="row" id="achievement_c">
+							<div class="col-md-4">
+								Achievement: Build it and they will come...
+							</div>
+							<div class="col-md-8">
+							<i class="glyphicon glyphicon-ok"></i>
+								Collect 15 tonnes of Construction materials
+							</div>
+						</div>
+
+					</div> <!-- achievements -->
+
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn" data-dismiss="modal">Close</button>
@@ -169,6 +206,12 @@
 					$('#gameStartModal').modal('hide');
 					gamestate.startGame();
 				});
+
+
+				$('#pause').on('click',function() {
+					gamestate.togglePause();
+				});
+
 			});
 		</script>
 	</body>

@@ -138,10 +138,10 @@ GameState.prototype.unpause = function() {
  * @param amount
  */
 GameState.prototype.pickup = function(type, amount) {
-	console.log('picked up ',type,amount);
 
 	if (type=='none') return false;
 	switch (type) {
+		// we randomly pick up a different type of metal/material. This then gets converted to cash.
 		case 'preciousMetals':
 			this._shipCargo.preciousMetals.push( Math.floor((Math.random()*6)+1) );
 		break;
@@ -172,11 +172,11 @@ GameState.prototype.onDock = function(dockingObject) {
 
   for (i=0; i<this._shipCargo.preciousMetals.length; i++) {
 	  var pickupIndex = this._shipCargo.preciousMetals[i];
-	  score += this.cashValues.preciousMetals[pickupIndex].value;
+	  score += this.cashValues.preciousMetals[pickupIndex-1].value;
   }
   for (i=0; i<this._shipCargo.constructionMaterials.length; i++) {
 	  var pickupIndex = this._shipCargo.constructionMaterials[i];
-	  score += this.cashValues.constructionMaterials[pickupIndex].value;
+	  score += this.cashValues.constructionMaterials[pickupIndex-1].value;
   }
   score += (this._shipCargo.waste *  this.cashValues.waste);
 

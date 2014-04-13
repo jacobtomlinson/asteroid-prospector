@@ -232,8 +232,6 @@ require(
             var d = scratch.vector();
             var lightness;
 
-            //document.getElementById('Body').style.backgroundPosition = (ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2);
-
             // draw the radar guides
             renderer.drawCircle(x, y, r, { strokeStyle: '#B3B3B3', fillStyle: '#010' });
             renderer.drawCircle(x, y, r * 2 / 3, { strokeStyle: '#B3B3B3' });

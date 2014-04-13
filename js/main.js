@@ -51,8 +51,8 @@ require(
             'circle': {
                 strokeStyle: 'rgb(0, 30, 0)',
                 lineWidth: 1,
-                fillStyle: 'rgb(100, 200, 50)',
-                angleIndicator: true
+                fillStyle: 'rgb(255, 255, 255)',
+                angleIndicator: false
             },
             'convex-polygon' : {
                 strokeStyle: 'rgb(60, 0, 0)',
@@ -62,6 +62,29 @@ require(
             }
         }
     });
+
+    function spawnAsteroid(Physics, world){
+        var ang = 4 * (Math.random() - 0.5) * Math.PI;
+        var r = 400 + 400 * Math.random() + 100;
+
+        var asteroidTypes = [
+            'asteroid-m',
+            'asteroid-s',
+            'asteroid-c'
+        ];
+        var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
+
+        world.add( Physics.body(asteroidTypes[randomAsteroid], {
+            x: 400 + Math.cos( ang ) * r,
+            y: 300 + Math.sin( ang ) * r,
+            vx: 0.03 * Math.sin( ang ),
+            vy: - 0.03 * Math.cos( ang ),
+            angularVelocity: (Math.random() - 0.5) * 0.001,
+            radius: 40,
+            mass: 30,
+            restitution: 0.6
+        }));
+    }
 
     var init = function init( world, Physics ){
 
@@ -81,27 +104,7 @@ require(
 
         var asteroids = [];
         for ( var i = 0, l = 50; i < l; ++i ){
-
-            var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 300 + 100 * Math.random() + i * 20;
-
-            var asteroidTypes = [
-                'asteroid-m',
-                'asteroid-s',
-                'asteroid-c'
-            ];
-            var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
-
-            asteroids.push( Physics.body(asteroidTypes[randomAsteroid], {
-                x: 400 + Math.cos( ang ) * r,
-                y: 300 + Math.sin( ang ) * r,
-                vx: 0.03 * Math.sin( ang ),
-                vy: - 0.03 * Math.cos( ang ),
-                angularVelocity: (Math.random() - 0.5) * 0.001,
-                radius: 40,
-                mass: 30,
-                restitution: 0.6
-            }));
+            spawnAsteroid(Physics, world);
         }
 
         var mainbase = Physics.body('circle', {
@@ -137,6 +140,8 @@ require(
             if ( killCount === asteroids.length ){
                 world.publish('win-game');
             }
+
+            spawnAsteroid(Physics, world);
         });
 
         world.subscribe('collect-point', function( point ){
@@ -233,7 +238,6 @@ require(
             Physics.behavior('body-impulse-response'),
             renderer
         ]);
-        world.add( asteroids );
     };
 
     var world = null;

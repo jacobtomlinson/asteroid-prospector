@@ -34,7 +34,7 @@ define(
                             case 39: // right
                                 player.turn( 1 );
                             break;
-                            case 90: // z
+                            case 32: // space
                                 player.shoot();
                             break;
                         }
@@ -56,7 +56,7 @@ define(
                             case 39: // right
                                 player.turn( 0 );
                             break;
-                            case 90: // z
+                            case 32: // space
                             break;
                         }
                         return false;

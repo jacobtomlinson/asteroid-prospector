@@ -1,7 +1,3 @@
-html {
-
-}
-
 #bg {
 	color: #EDEBEB;
 	background-image:url("../webimages/asteroid.png");
@@ -48,10 +44,14 @@ html {
 #main {
 	background-color:rgba(0,0,0,0.6);
 	padding-top: 75px;
-	max-width: 800px;
+	width: 800px;
 	margin-bottom: 40px;
-	#max-width: 1024px;
 	float: right;
+}
+
+#main img {
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 #progress {

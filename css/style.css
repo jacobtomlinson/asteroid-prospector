@@ -27,7 +27,7 @@
 }
 
 #sidebar {
-	position: fixed;
+	position: static;
 	margin-top: 100px;
 	background-color:rgba(0,0,0,0.75);
 	float: left;

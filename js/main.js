@@ -67,8 +67,10 @@ require(
         var x = 0;
         var y = 0;
 
-        // find a location for the new asteroid that's not on the screen
-        // (which means that)
+        // find a location for the asteroid, in a circular belt
+        // while loop makes sure the asteroid doesn't appear on the current view
+        // (check that none of the asteroid belt overlaps with view at start
+        // otherwise asteriod belt will have a gap in it)
         while (x == 0 && y == 0 || ( 
             x > ship.state.pos.get(0) - (renderer.options.width / 2) && 
             x < ship.state.pos.get(0) + (renderer.options.width / 2) && 

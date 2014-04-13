@@ -87,6 +87,8 @@ GameState.prototype.bindUI = function() {
 
 	$('#handbook-mining').on('click',function() {
 		// load up mining info page in new tab
+		gamestate.pause();
+		return true;
 	});
 	$('#handbook-company').on('click',function() {
 		$('#gameHandbookModal').modal({
@@ -251,7 +253,7 @@ GameState.prototype.onDock = function(dockingObject) {
 			var elementName = this.cashValues.preciousMetals[i].name;
 			var count = this.cashValues.preciousMetals[i].count;
 			var elementScore = count *  this.cashValues.preciousMetals[i].value;
-			html += '<tr><td class="element">'+elementName.toUpperCase()+'</td><td>'+count+'</td><td>$'+elementScore+'K</td></tr>';
+			html += '<tr><td class="element"><a href="story.html#'+elementName+'" target="_blank">'+elementName.toUpperCase()+'</a></td><td>'+count+'</td><td>$'+elementScore+'K</td></tr>';
 		}
 		html += '</tbody>';
 
@@ -268,7 +270,7 @@ GameState.prototype.onDock = function(dockingObject) {
 			var elementName = this.cashValues.constructionMaterials[i].name;
 			var count = this.cashValues.constructionMaterials[i].count;
 			var elementScore = count *  this.cashValues.constructionMaterials[i].value;
-			html += '<tr><td class="element">'+elementName.toUpperCase()+'</td><td>'+count+'</td><td>$'+elementScore+'K</td></tr>';
+			html += '<tr><td class="element"><a href="story.html#'+elementName+'" target="_blank">'+elementName.toUpperCase()+'</a></td><td>'+count+'</td><td>$'+elementScore+'K</td></tr>';
 		}
 		html += '</tbody>';
 

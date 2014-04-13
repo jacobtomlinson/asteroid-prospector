@@ -121,8 +121,8 @@ require(
         var mainbase = Physics.body('circle', {
             fixed: true,
             // hidden: true,
-            mass: 1000,
-            radius: 30,
+            mass: 500,
+            radius: 60,
             x: 400,
             y: 300
         });
@@ -240,9 +240,9 @@ require(
 
         // add things to the world
         world.add([
+            mainbase,
             ship,
             playerBehavior,
-            mainbase,
             Physics.behavior('newtonian', { strength: 1e-4 }),
             Physics.behavior('sweep-prune'),
             Physics.behavior('body-collision-detection'),

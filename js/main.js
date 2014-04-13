@@ -66,26 +66,34 @@ require(
     function spawnAsteroid(Physics, world, ship, renderer){
         var x = 0;
         var y = 0;
-        while (x == 0 && y == 0 && 
+        while (x == 0 && y == 0 || ( 
             x > ship.state.pos.get(0) - (renderer.options.width / 2) && 
             x < ship.state.pos.get(0) + (renderer.options.width / 2) && 
             y > ship.state.pos.get(1) - (renderer.options.height / 2) && 
             y < ship.state.pos.get(1) + (renderer.options.height / 2) 
-            ){
+            )){
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
             var r = 400 + 400 * Math.random() + 100;
             x = 400 + Math.cos( ang ) * r;
             y = 300 + Math.sin( ang ) * r;
         }
 
-        var asteroidTypes = [
-            'asteroid-m',
-            'asteroid-s',
-            'asteroid-c'
-        ];
-        var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
+        var asteroidTypes = {
+            'asteroid-m': 8,
+            'asteroid-s' : 17,
+            'asteroid-c' : 75
+        };
+        var randomAsteroid = Math.floor(Math.random() * 100);
 
-        world.add( Physics.body(asteroidTypes[randomAsteroid], {
+        for (key in asteroidTypes) {
+              randomAsteroid -= asteroidTypes[key];
+              if (randomAsteroid <= 0){
+                useAsteroid = key;
+                break;
+              }
+        }
+
+        var asteroid = Physics.body(useAsteroid, {
             x: x,
             y: y,
             vx: 0.03 * Math.sin( ang ),
@@ -94,7 +102,14 @@ require(
             radius: 40,
             mass: 30,
             restitution: 0.6
-        }));
+        })
+
+        asteroid.gameType = useAsteroid;
+
+        world.add( asteroid );
+
+        //console.log((ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2));
+        //console.log(document.body.style.backgroundPosition);
     }
 
     var init = function init( world, Physics ){
@@ -217,7 +232,7 @@ require(
             var d = scratch.vector();
             var lightness;
 
-            document.body.style.backgroundPosition = (ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2);
+            //document.getElementById('Body').style.backgroundPosition = (ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2);
 
             // draw the radar guides
             renderer.drawCircle(x, y, r, { strokeStyle: '#B3B3B3', fillStyle: '#010' });
@@ -233,7 +248,19 @@ require(
                 // if it's inside the minimap radius
                 if (d.norm() < r && b.mass > 1){
                     // draw the dot
-                    renderer.drawCircle(x + d.get(0), y + d.get(1), 1, 'hsl(60, 100%, '+lightness+'%)');
+                    if (b.gameType == 'base'){
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 4, '#FFFFFF');
+                    } else if (b.gameType == 'ship'){
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#FF0000');
+                    } else if (b.gameType == 'asteroid-s'){
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#58493C');
+                    } else if (b.gameType == 'asteroid-c'){
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#2C2C2C');
+                    } else if (b.gameType == 'asteroid-m'){
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#505050');
+                    } else {
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, 'hsl(60, 100%, '+lightness+'%)');
+                    }
                 }
             }
 

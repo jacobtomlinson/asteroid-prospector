@@ -119,6 +119,8 @@ GameState.prototype.gameOver = function(reason) {
 	});
 
 	$('#gameOver .finalscore span').html(gamestate._money);
+	// let the world keep on running
+	this._world.unpause();
 };
 
 GameState.prototype.pause = function() {

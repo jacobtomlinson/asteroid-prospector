@@ -37,6 +37,13 @@ define(
                             case 32: // space
                                 player.shoot();
                             break;
+                            case 27: // escape
+                                if (gamestate.isPaused) {
+                                    gamestate.unpause();
+                                } else {
+                                    gamestate.pause();
+                                }
+                            break;
                         }
                         return false;
                     });
@@ -57,6 +64,8 @@ define(
                                 player.turn( 0 );
                             break;
                             case 32: // space
+                            break;
+                            case 27: // escape
                             break;
                         }
                         return false;

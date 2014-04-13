@@ -95,6 +95,9 @@ require(
             mass: 30,
             restitution: 0.6
         }));
+
+        //console.log((ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2));
+        //console.log(document.body.style.backgroundPosition);
     }
 
     var init = function init( world, Physics ){
@@ -217,7 +220,7 @@ require(
             var d = scratch.vector();
             var lightness;
 
-            document.body.style.backgroundPosition = (ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2);
+            //document.getElementById('Body').style.backgroundPosition = (ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2);
 
             // draw the radar guides
             renderer.drawCircle(x, y, r, { strokeStyle: '#B3B3B3', fillStyle: '#010' });
@@ -233,7 +236,11 @@ require(
                 // if it's inside the minimap radius
                 if (d.norm() < r && b.mass > 1){
                     // draw the dot
-                    renderer.drawCircle(x + d.get(0), y + d.get(1), 1, 'hsl(60, 100%, '+lightness+'%)');
+                    if (b.gameType != 'base'){
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, 'hsl(60, 100%, '+lightness+'%)');
+                    }else {
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 4, 'hsl(60, 100%, '+lightness+'%)');
+                    }
                 }
             }
 

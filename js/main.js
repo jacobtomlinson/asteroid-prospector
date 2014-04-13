@@ -68,6 +68,7 @@ require(
         var y = 0;
 
         // find a location for the new asteroid that's not on the screen
+        // (which means that)
         while (x == 0 && y == 0 || ( 
             x > ship.state.pos.get(0) - (renderer.options.width / 2) && 
             x < ship.state.pos.get(0) + (renderer.options.width / 2) && 
@@ -75,9 +76,17 @@ require(
             y < ship.state.pos.get(1) + (renderer.options.height / 2) 
             )){
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
-            var r = 400 + 400 * Math.random() + 100;
-            x = 400 + Math.cos( ang ) * r;
-            y = 300 + Math.sin( ang ) * r;
+            //var rmin = 500;
+            //var rmax = 900;
+            var rmin = 2000;
+            var rmax = 2400;
+            var r = rmin + (rmax - rmin) * Math.random();
+            //var x0 = 0;
+            //var y0 = 0;
+            var x0 = -1500;
+            var y0 = 0;
+            x = x0 + Math.cos( ang ) * r;
+            y = y0 + Math.sin( ang ) * r;
         }
 
         // set distribution of asteroid types (given as percentages)
@@ -124,8 +133,8 @@ require(
 
         // create spaceship which will be controlled by the user
         var ship = Physics.body('player', {
-            x: 400,
-            y: 100,
+            x: 0,
+            y: 0,
             vx: 0.08,
             radius: 30,
             mass: 30
@@ -134,11 +143,24 @@ require(
 
         var playerBehavior = Physics.behavior('player-behavior', { player: ship });
 
-        // create asteroids at distrubuted randomly-ish around the map
+        // create asteroids 
         var asteroids = [];
-        for ( var i = 0, l = 50; i < l; ++i ){
+        for ( var i = 0, l = 100; i < l; ++i ){
             spawnAsteroid(Physics, world, ship, renderer);
         }
+
+        // create saturn
+        var saturn = Physics.body('circle', {
+            fixed: true,
+            // hidden: true,
+            mass: 0,
+            radius: 0,
+            x: 1500,
+            y: -100
+        });
+        saturn.gameType = 'planet';
+        saturn.view = new Image();
+        saturn.view.src = require.toUrl('images/saturn.png');
 
         // create the main base
         var mainbase = Physics.body('circle', {
@@ -146,7 +168,7 @@ require(
             // hidden: true,
             mass: 500,
             radius: 60,
-            x: 400,
+            x: 200, // make sure it's not in the asteroid belt
             y: 300
         });
         mainbase.gameType = 'base';
@@ -276,6 +298,7 @@ require(
 
         // add things to the world
         world.add([
+            saturn,
             mainbase,
             ship,
             playerBehavior,

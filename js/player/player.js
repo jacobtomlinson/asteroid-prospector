@@ -144,7 +144,7 @@ define(
                     var n = 40; // create 40 pieces of debris
                     var r = 2 * this.geometry.radius; // circumference
                     var size = 8 * r / n; // rough size of debris edges
-                    var mass = this.mass / n; // mass of debris
+                    var mass = 0.001; // mass of debris
                     var verts;
                     var d;
                     var debris = [];

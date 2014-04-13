@@ -57,15 +57,26 @@ require(
             'convex-polygon' : {
                 strokeStyle: 'rgb(60, 0, 0)',
                 lineWidth: 1,
-                fillStyle: 'rgb(60, 16, 11)',
+                fillStyle: 'rgb(255, 0, 0)',
                 angleIndicator: false
             }
         }
     });
 
-    function spawnAsteroid(Physics, world){
-        var ang = 4 * (Math.random() - 0.5) * Math.PI;
-        var r = 400 + 400 * Math.random() + 100;
+    function spawnAsteroid(Physics, world, ship, renderer){
+        var x = 0;
+        var y = 0;
+        while (x == 0 && y == 0 && 
+            x > ship.state.pos.get(0) - (renderer.options.width / 2) && 
+            x < ship.state.pos.get(0) + (renderer.options.width / 2) && 
+            y > ship.state.pos.get(1) - (renderer.options.height / 2) && 
+            y < ship.state.pos.get(1) + (renderer.options.height / 2) 
+            ){
+            var ang = 4 * (Math.random() - 0.5) * Math.PI;
+            var r = 400 + 400 * Math.random() + 100;
+            x = 400 + Math.cos( ang ) * r;
+            y = 300 + Math.sin( ang ) * r;
+        }
 
         var asteroidTypes = [
             'asteroid-m',
@@ -75,8 +86,8 @@ require(
         var randomAsteroid = Math.floor(Math.random()*asteroidTypes.length);
 
         world.add( Physics.body(asteroidTypes[randomAsteroid], {
-            x: 400 + Math.cos( ang ) * r,
-            y: 300 + Math.sin( ang ) * r,
+            x: x,
+            y: y,
             vx: 0.03 * Math.sin( ang ),
             vy: - 0.03 * Math.cos( ang ),
             angularVelocity: (Math.random() - 0.5) * 0.001,
@@ -104,14 +115,14 @@ require(
 
         var asteroids = [];
         for ( var i = 0, l = 50; i < l; ++i ){
-            spawnAsteroid(Physics, world);
+            spawnAsteroid(Physics, world, ship, renderer);
         }
 
         var mainbase = Physics.body('circle', {
             fixed: true,
             // hidden: true,
-            mass: 1000,
-            radius: 30,
+            mass: 500,
+            radius: 60,
             x: 400,
             y: 300
         });
@@ -141,7 +152,7 @@ require(
                 world.publish('win-game');
             }
 
-            spawnAsteroid(Physics, world);
+            spawnAsteroid(Physics, world, ship, renderer);
         });
 
         world.subscribe('collect-point', function( point ){
@@ -229,9 +240,9 @@ require(
 
         // add things to the world
         world.add([
+            mainbase,
             ship,
             playerBehavior,
-            mainbase,
             Physics.behavior('newtonian', { strength: 1e-4 }),
             Physics.behavior('sweep-prune'),
             Physics.behavior('body-collision-detection'),

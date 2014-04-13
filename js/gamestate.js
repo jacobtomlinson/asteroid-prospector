@@ -117,6 +117,7 @@ GameState.prototype.gameOver = function(reason) {
 		keyboard: false,
 		show:true
 	});
+	this._world.unpause();
 };
 
 GameState.prototype.pause = function() {

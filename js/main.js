@@ -300,7 +300,7 @@ require(
 
         // add things to the world
         world.add([
-            saturn,
+          //  saturn,
             mainbase,
             ship,
             playerBehavior,

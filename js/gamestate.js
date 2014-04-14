@@ -1,18 +1,14 @@
 /**
- * Gamestate helper functions
+ * Gamestate / UI helper functions
+ * 
+ * @package Asteroid Prospector (NASA Space Apps 2014 Hackathon)
+ * @author Kris Sum
+ * 
  */
 function GameState() {
 
 	// total score for the full game session
 	this._gameScore = {
-		'preciousMetals' : 0,
-		'constructionMaterials' : 0,
-		'waste': 0,
-	};
-
-	// current mission score
-	// not used
-	this._missionScore = {
 		'preciousMetals' : 0,
 		'constructionMaterials' : 0,
 		'waste': 0,
@@ -25,11 +21,7 @@ function GameState() {
 	};
 
 	this._shipFuel = 100;
-	this._unlockedAchievements = { };
-	this._storyProgression = 1;
-
 	this._money = 0;
-
 	this._world = null;
 	this.isPaused = true;
 
@@ -72,6 +64,9 @@ GameState.prototype.init = function() {
 	this.bindUI();
 };
 
+/**
+ * Link our gamestate up to the physics world
+ */
 GameState.prototype.setWorld = function(world) {
 	this._world = world;
 
@@ -222,6 +217,7 @@ GameState.prototype.onDock = function(dockingObject) {
 	this.cashValues.constructionMaterials[i].count = 0;
   }
 
+  // work out how much of each thing we collected
   for (i=0; i<this._shipCargo.preciousMetals.length; i++) {
 	  var pickupIndex = this._shipCargo.preciousMetals[i];
 	  score += this.cashValues.preciousMetals[pickupIndex-1].value;
@@ -239,6 +235,8 @@ GameState.prototype.onDock = function(dockingObject) {
   if (score>0) {
 	gamestate.pause();
 
+	// generate the HTML breakdown
+	
 	var html='';
 
 	html += '<div class="row">';

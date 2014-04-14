@@ -4,6 +4,8 @@ A browser based game involving mining asteroids. Part of the [2014 NASA Space Ap
 
 [Play it here](http://killfall.github.io/asteroid-prospector/)
 
+![Screenshot](http://killfall.github.io/asteroid-prospector/webimages/screen061.png "Screenshot")
+
 ### Challenge
 This project is a solution to the following challenge created by Dr. Phil Metzger.
 >Develop a game to travel across the solar system going from asteroid to asteroid. The strategy is to decide which asteroid to visit and mine next, given a field of asteroids that vary in location, composition, size, and more. A major part of this challenge is learning over the course of the International Space Apps Weekend what the purpose and value of an asteroid resource utilization/industry could be and incorporating it into the game.

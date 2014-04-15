@@ -24,6 +24,7 @@ function GameState() {
 	this._money = 0;
 	this._world = null;
 	this.isPaused = true;
+	this.isGameOver = true;
 
 	this.cashValues = {
 			// values in $1000s
@@ -71,6 +72,8 @@ GameState.prototype.setWorld = function(world) {
 	this._world = world;
 
 	var thisGamestate = this;
+
+	this.isGameOver = false;
 
 	this._world.subscribe('lose-game', function(){
 		thisGamestate.gameOver();
@@ -147,6 +150,7 @@ GameState.prototype.startGame = function () {
  */
 GameState.prototype.gameOver = function(reason) {
 	this.pause();
+	this.isGameOver = true;
 	$('#restartGameBtn').show();
 	$('#gameOver').modal({
 		backdrop: 'static',

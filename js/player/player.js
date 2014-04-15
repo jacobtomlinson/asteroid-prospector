@@ -175,6 +175,27 @@ define(
                         }
                     }
 
+                    this.launchPod();
+
+                    // add debris
+                    world.add( debris );
+                    // remove player
+                    world.removeBody( this );
+                    scratch.done();
+                    return self;
+                },
+                launchPod: function(){
+                    var self = this;
+                    var world = this._world;
+                    if (!world){
+                        return self;
+                    }
+                    var scratch = Physics.scratchpad();
+                    var rnd = scratch.vector();
+                    var r = 2 * this.geometry.radius; // circumference
+                    var pos = this.state.pos;
+                    var d;
+
                     rnd.set( Math.random() - 0.5, Math.random() - 0.5 ).mult( r );
                     d = Physics.body('circle', {
                         x: pos.get(0) + rnd.get(0),
@@ -193,12 +214,6 @@ define(
                     d.view = podImg;
                     world.add( d );
 
-                    // add debris
-                    world.add( debris );
-                    // remove player
-                    world.removeBody( this );
-                    scratch.done();
-                    return self;
                 }
             };
         });

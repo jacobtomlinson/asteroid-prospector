@@ -19,7 +19,7 @@ define(
 
                     // events
                     document.addEventListener('keydown', function( e ){
-                        if (self.gameover){
+                        if (gamestate.isGameOver){
                             return;
                         }
                         switch ( e.keyCode ){

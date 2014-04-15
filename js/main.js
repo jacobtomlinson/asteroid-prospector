@@ -303,6 +303,8 @@ require(
             }
 
             scratch.done();
+
+            $('body').css('background-position', - Math.floor(ship.state.pos.get(0) / 2) + 'px ' + - Math.floor(ship.state.pos.get(1) / 2) + 'px');
         });
 
         // add things to the world

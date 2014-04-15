@@ -275,8 +275,13 @@ require(
                 // get the displacement of the body from the ship and scale it
                 d.clone( ship.state.pos ).vsub( b.state.pos ).mult( -0.05 );
                 
+                if (d.norm() > r && b.mass > 1){
+                    var bx = r * Math.cos(d.angle());
+                    var by = r * Math.sin(d.angle());
+                    d.set(bx,by);
+                }
                 // if it's inside the minimap radius
-                if (d.norm() < r && b.mass > 1){
+                if (b.mass > 1){
                     // draw the dot
                     if (b.gameType == 'base'){
                         renderer.drawCircle(x + d.get(0), y + d.get(1), 4, '#FFFFFF');

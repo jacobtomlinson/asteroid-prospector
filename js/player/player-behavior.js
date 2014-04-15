@@ -19,7 +19,7 @@ define(
 
                     // events
                     document.addEventListener('keydown', function( e ){
-                        if (self.gameover){
+                        if (gamestate.isGameOver){
                             return;
                         }
                         switch ( e.keyCode ){
@@ -105,7 +105,9 @@ define(
 
                         // if we aren't looking at pickups
                         // and one of these bodies is the player...
-                        if ( col.bodyA.gameType !== 'pickup' && 
+                        if ( col.bodyA.gameType !== 'planet' && 
+                            col.bodyB.gameType !== 'planet' &&
+                            col.bodyA.gameType !== 'pickup' && 
                             col.bodyB.gameType !== 'pickup' && 
                             (col.bodyA === player || col.bodyB === player) 
                         ){

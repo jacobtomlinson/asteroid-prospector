@@ -274,10 +274,15 @@ require(
 
                 // get the displacement of the body from the ship and scale it
                 d.clone( ship.state.pos ).vsub( b.state.pos ).mult( -0.05 );
-                // color the dot based on how massive the body is
-                lightness = Math.max(Math.min(Math.sqrt(b.mass*10)|0, 100), 10);
-                // if it's inside the minimap radius
-                if (d.norm() < r && b.mass > 1){
+                
+                // if it has a mass bigger than 1
+                if (b.mass > 1){
+                    // if out side the minimap set the vector to the edge of the mini map
+                    if (d.norm() > r && b.mass > 1){
+                        var bx = r * Math.cos(d.angle());
+                        var by = r * Math.sin(d.angle());
+                        d.set(bx,by);
+                    }
                     // draw the dot
                     if (b.gameType == 'base'){
                         renderer.drawCircle(x + d.get(0), y + d.get(1), 4, '#FFFFFF');
@@ -290,17 +295,21 @@ require(
                     } else if (b.gameType == 'asteroid-m'){
                         renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#505050');
                     } else {
+                        // color the dot based on how massive the body is
+                        lightness = Math.max(Math.min(Math.sqrt(b.mass*10)|0, 100), 10);
                         renderer.drawCircle(x + d.get(0), y + d.get(1), 1, 'hsl(60, 100%, '+lightness+'%)');
                     }
                 }
             }
 
             scratch.done();
+
+            $('body').css('background-position', - Math.floor(ship.state.pos.get(0) / 2) + 'px ' + - Math.floor(ship.state.pos.get(1) / 2) + 'px');
         });
 
         // add things to the world
         world.add([
-          //  saturn,
+            //saturn,
             mainbase,
             ship,
             playerBehavior,

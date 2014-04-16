@@ -21,23 +21,28 @@ It is the year 2128. The population of the Earth and Moon has stabilised at 11 b
 The APE Mining Corp, the largest mining conglomerate in the solar system, is now opening up a new frontier - in the asteroid belt. A young Martian, you have just joined their operation as a freelance mining operative. The job involves spending months at a time in space, is sometimes dangerous and the company is a secretive, inscrutable bureaucracy, but you need the work...
 
 ## Collaborators
+ 
+#### Project Management
 
-### Game coding
+ * [Jacob Tomlinson (Project team leader)](http://www.jacobtomlinson.co.uk/)
+ * Ian Gentry
 
- * Jacob Tomlinson (Project team leader)
- * Karina Williams
+#### Game coding
+
+ * Jacob Tomlinson
  * Kris Sum
+ * Karina Williams
 
-### Game graphics
+#### Game graphics
 
  * Oli Bird
 
-### Website
+#### Website
 
  * Gary Lipscombe
  * Ian Gentry
 
-### Story
+#### Story
 
  * Alexander Barry
  * Faith Yemofio
@@ -46,7 +51,7 @@ The APE Mining Corp, the largest mining conglomerate in the solar system, is now
  * Ketaki Sharma
  * Paul Rogers
 
-### Research
+#### Research
 
  * Alexander Barry
  * Faith Yemofio
@@ -55,7 +60,7 @@ The APE Mining Corp, the largest mining conglomerate in the solar system, is now
  * Ketaki Sharma
  * Paul Rogers
 
-### Testing
+#### Testing
 
  * Alexander Barry
  * Faith Yemofio
@@ -68,15 +73,18 @@ The APE Mining Corp, the largest mining conglomerate in the solar system, is now
  * Oli Bird
  * Paul Rogers
 
-### Social Media
+#### Social Media
 
  * Adrian Wood
 
-### Presentation
+#### Presentation
 
  * Adrian Wood
 
-### Translations
+#### Translations
 
- * Elena Meneguz - IT
- * Karina Williams - DE
+ * Elena Meneguz - Italian
+ * Karina Williams - German
+ * Anke Finnenkötter - German
+ * Ketaki Sharma - Hindi
+ * Franck Davanier - French

@@ -80,7 +80,9 @@ The APE Mining Corp, the largest mining conglomerate in the solar system, is now
 
  * Elena Meneguz - Italian
  * Karina Williams - German
+ * Anke Finnenkötter - German
  * Ketaki Sharma - Hindi
+ * Franck Davanier - French
  
 ### Project Management
  

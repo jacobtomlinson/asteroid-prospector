@@ -158,7 +158,7 @@ GameState.prototype.gameOver = function(reason) {
 		show:true
 	});
 
-	$('#gameOver .finalscore span').html(gamestate._money);
+	$('#gameOver .finalscore .money').html(gamestate._money);
 	$('#gameOver .finalscore .preciousMetals').html(gamestate._gameScore.preciousMetals);
 	$('#gameOver .finalscore .constructionMaterials').html(gamestate._gameScore.constructionMaterials);
 	$('#gameOver .finalscore .waste').html(gamestate._gameScore.waste);

@@ -45,7 +45,6 @@
 						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" ><i class="glyphicon glyphicon-refresh"></i> Retry</a>
 						<button class="btn btn-info btn-sm" id="pause" value="Pause Game" ><i class="glyphicon glyphicon-pause"></i> Pause</button>
 					</div>
-
 					<div class="fuelbar pull-right">
 					FUEL
 						<div class="progress progress-striped" id="fuel">
@@ -66,6 +65,21 @@
 		</div>
 
 		<canvas id="viewport"></canvas>
+
+
+
+		<!-- AddThis Butt<!-- AddThis Button BEGIN -->
+		<div class="addthis_toolbox addthis_floating_style addthis_16x16_style" style="left:0px;top:55px;padding-left:0px;background:none;">
+		<a class="addthis_button_preferred_1"></a>
+		<a class="addthis_button_preferred_2"></a>
+		<a class="addthis_button_preferred_3"></a>
+		<a class="addthis_button_preferred_4"></a>
+		<a class="addthis_button_preferred_5"></a>
+		<a class="addthis_button_preferred_6"></a>
+		<a class="addthis_button_preferred_7"></a>
+		<a class="addthis_button_compact"></a>
+		</div>
+		<!-- AddThis Button END -->
 
 		<div id="gameStartModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
@@ -95,7 +109,17 @@
 		      <div class="modal-body">
 					<p><strong>Escape pod launched.</strong> Docking will commence automatically.</p>
 					<div class="finalscore well">
-		      	<h2>Your Final Score: <span>0</span></h2>
+		      	<h2>Your Final Score: <span class="money">0</span></h2>
+		      	<!-- AddThis Button BEGIN -->
+				<h3 style="float:left;display:inline;margin:0px;">Share: </h3>
+				<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+				<a class="addthis_button_preferred_1"></a>
+				<a class="addthis_button_preferred_2"></a>
+				<a class="addthis_button_preferred_3"></a>
+				<a class="addthis_button_preferred_4"></a>
+				<a class="addthis_button_compact"></a>
+				</div>
+				<!-- AddThis Button END -->
 		      	<h3>You managed to mine:</h3>
 		      	<p><img src="images/pickupP.png"> <span class="preciousMetals"></span> tonnes of precious metals</p>
 		      	<p><img src="images/pickupC.png"> <span class="constructionMaterials"></span> tonnes of construction materials</p>
@@ -152,6 +176,16 @@
 								Collect 15 tonnes of Construction materials
 							</div>
 						</div>
+		      	<!-- AddThis Button BEGIN -->
+				<h3 style="float:left;display:inline;margin:0px;margin-top:30px;">Share: </h3>
+				<div class="addthis_toolbox addthis_default_style addthis_32x32_style"style="margin-top:30px;">
+				<a class="addthis_button_preferred_1"></a>
+				<a class="addthis_button_preferred_2"></a>
+				<a class="addthis_button_preferred_3"></a>
+				<a class="addthis_button_preferred_4"></a>
+				<a class="addthis_button_compact"></a>
+				</div>
+				<!-- AddThis Button END -->
 
 					</div> <!-- achievements -->
 
@@ -217,16 +251,25 @@
 	</body>
 
 	<!-- Google Analytics -->
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			ga('create', 'UA-49829161-1', 'killfall.github.io');
-			ga('send', 'pageview');
+		ga('create', 'UA-49829161-1', 'killfall.github.io');
+		ga('send', 'pageview');
 
-		</script>
+	</script>
+
+	<!-- AddThis Sharing Buttons -->	
+	<script type="text/javascript">
+		var addthis_config = {
+			"data_track_addressbar":true,
+			"data_ga_property":'UA-49829161-1',
+		};
+	</script>
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-534fa689318af3cf"></script>
 	</body>
 </html>
 

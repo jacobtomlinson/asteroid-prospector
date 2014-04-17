@@ -4,8 +4,8 @@ require(
     baseUrl: './',
     packages: [{
         name: 'physicsjs',
-        location: 'http://wellcaffeinated.net/PhysicsJS/assets/scripts/vendor/physicsjs-0.5.2/',
-        main: 'physicsjs-0.5.2.min'
+        location: 'js/physicsjs/',
+        main: 'physicsjs-0.5.4.min'
     }]
 },
 [

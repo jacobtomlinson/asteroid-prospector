@@ -1,10 +1,12 @@
+[Our Video](http://youtu.be/febl7ETg8I0)
+
 ![Screenshot](http://killfall.github.io/asteroid-prospector/webimages/screen061.png)
 
-### **The game**
-Asteroid Prospector is a 2d browser based game about mining asteroids. You must control your mining craft by changing the rotation and using the thrusters. To mine the asteroid you must break it into it's basic components with your mining missile and then return those components to the APE station for them to be refined. 
+### **The Game**
+Asteroid Prospector is a 2d browser-based game about mining asteroids. You must control your mining craft by changing the rotation and using the thrusters. To mine the asteroid you must break it into its basic components with your mining missile and then return those components to the APE station for them to be refined. 
 
 #### **Asteroids**
-The game contains 3 types of asteroids
+The game contains 3 types of asteroids:
 
 ![Screenshot](http://killfall.github.io/asteroid-prospector/images/asteroidC1.png)
 **Asteroid type C (Carbonaceous)**
@@ -15,24 +17,24 @@ The game contains 3 types of asteroids
 ![Screenshot](http://killfall.github.io/asteroid-prospector/images/asteroidM1.png)
 **Asteroid type M (Metallic)**
 
-Depending on the type of asteroid they will drop a combination of different materials
+Depending on the type of asteroid they will drop a combination of different materials.
 
 #### **Materials**
 
 ![Screenshot](http://killfall.github.io/asteroid-prospector/images/pickupF.png)
-**Fuel** - Made by separating the oxygen and hydrogen in water or ice (gives your ship a small fuel increase)
+ **Fuel** - Made by separating the oxygen and hydrogen in water or ice (gives your ship a small fuel increase)
 
 ![Screenshot](http://killfall.github.io/asteroid-prospector/images/pickupW.png)
-**Waste** - Low value materials, picking them up is not only slightly lucrative but also good for the environment
+ **Waste** - Low value materials, picking them up is not only slightly lucrative but also good for the environment
 
 ![Screenshot](http://killfall.github.io/asteroid-prospector/images/pickupC.png)
-**Construction Materials** - Common metals and other elements which would be useful in colonisation and space flight
+ **Construction Materials** - Common metals and other elements which would be useful in colonisation and space flight
 
 ![Screenshot](http://killfall.github.io/asteroid-prospector/images/pickupP.png)
-**Precious Metals** - Rare earth metals which carry a high value
+ **Precious Metals** - Rare earth metals which carry a high value
 
 #### **Refining**
-Once you have collected materials and your fuel is running low you must return to the "APE Station" for the materials to be refined. You do this by docking with [crashing into] the station. You will then be presented with a breakdown of which elements those materials have been refined into. Each element on the list is linked to a fact sheet about what that element is and why it is useful in space travel and colonisation.
+Once you have collected materials and your fuel is running low you must return to the "APE Station" for the materials to be refined. You do this by docking with [crashing into] the station. You will then be presented with a breakdown of the elements those materials have been refined into. Each element on the list is linked to a fact sheet about its composition and why it is useful for space travel and colonisation.
 
 The elements are then exchanged for money and your game score is updated. Your ship is also refuelled so you can go back out and find some more asteroids.
 
@@ -44,7 +46,7 @@ I wanted to ensure that no matter how big (or small) the team, we would definite
 Many people refer to this methodology as 'agile' development but I purposely didn't use that word at any point during the weekend as I didn't want to spend any time discussing what 'agile' is and get bogged down in the methodology.
 
 ### **How we achieved this**
-We were successful in achieving this! We made use of open source frameworks such as [PhysicsJS](http://wellcaffeinated.net/PhysicsJS/) and jQuery and built a very basic game with a rudimentary scoring system and count down timer. Just 2 hours into the challenge we had already released version 0.1 to the internet and people around the world were playing it and giving us feedback on where we should improve it and spend our limited time.
+We were successful in achieving this! We made use of open source frameworks such as [PhysicsJS](http://wellcaffeinated.net/PhysicsJS/) and jQuery and built a very basic game with a rudimentary scoring system and countdown timer. Just 2 hours into the challenge we had already released version 0.1 to the internet and people around the world were playing it and giving us feedback on where we should improve it and spend our limited time.
 
 We then split each feature we wished to add into small but complete pieces and released them as soon as they were ready. That way the game was constantly evolving and growing but remained completely playable throughout the weekend.
 
@@ -74,7 +76,7 @@ All translations were crowdsourced but some of our translators wished not to be 
 We plan to take the project forwards in a number of ways, including:
 
 #### **Teaching materials**
-There are already plans for this project to be used in schools, not only as an aide to teaching about space and asteroids but also about project management, time management and programming.
+There are already plans for this project to be used in schools, not only as an aid to teaching about space and asteroids but also about project management, time management and programming.
 
 I have also received a request to give a lecture about this project at a university.
 

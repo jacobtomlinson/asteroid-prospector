@@ -1,6 +1,6 @@
 #bg {
 	color: #EDEBEB;
-	background-color: #000000;
+	background-color: #000012;
 	background-image:url("../webimages/asteroid.png");
 	background-repeat: no-repeat;
 	position: absolute;
@@ -31,7 +31,7 @@
 #sidebar {
 	position: static;
 	margin-top: 100px;
-	background-color:rgba(0,0,0,0.75);
+	/*background-color:rgba(0,0,0,0.75);*/
 	float: left;
 }
 
@@ -44,7 +44,7 @@
 }
 
 #main {
-	background-color:rgba(0,0,0,0.6);
+	/*background-color:rgba(0,0,0,0.6);*/
 	padding-top: 75px;
 	width: 800px;
 	margin-bottom: 40px;

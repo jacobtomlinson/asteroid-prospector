@@ -1,4 +1,4 @@
-[Our Video](http://youtu.be/febl7ETg8I0)
+[Our Video](https://www.youtube.com/watch?v=PnRttvCWk6o)
 
 ![Screenshot](http://killfall.github.io/asteroid-prospector/webimages/screen061.png)
 

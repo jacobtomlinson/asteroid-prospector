@@ -5,11 +5,13 @@ body {
   	color: #FFFFFF;
     font-family: 'Open Sans', sans-serif;
 }
+
 h1 {
 	font-size: 30px;
     font-family: 'Dosis', sans-serif;
     font-weight: 200;
 }
+
 a, a:active {
 	color: #ff9933;
 	text-decoration: none;
@@ -45,7 +47,7 @@ li a:hover {
 }
 
 .logo {
-	margin-top: 30px;
+	margin-top: 10px;
 	height: 100px;
 	width: 100px;
 }
@@ -64,6 +66,10 @@ li a:hover {
 	border-color: #FFFFFF;
 	color: #FFFFFF;
 	font-size: 18px;
+}
+
+.fa-2x {
+	font-size: 1.5em;
 }
 
 .social i {
@@ -104,6 +110,10 @@ li a:hover {
 
 	h1 {
 		font-size: 80px;
+	}
+
+	.fa-2x {
+		font-size: 2em;
 	}
 
 	.logo {

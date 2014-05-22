@@ -1,78 +1,174 @@
-#bg {
-	color: #EDEBEB;
-	background-color: #000012;
-	background-image:url("../webimages/asteroid.png");
-	background-repeat: no-repeat;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	max-height: 1500px;
+body {
+	background-color: #00002a;
+  	background-image: url("../images/background.png");
+  	background-position: center top;
+  	color: #FFFFFF;
+    font-family: 'Open Sans', sans-serif;
+}
+h1 {
+	font-size: 30px;
+    font-family: 'Dosis', sans-serif;
+    font-weight: 200;
+}
+a, a:active {
+	color: #ff9933;
+	text-decoration: none;
 }
 
-#wrap {
-	width: 1000px;
+a:hover {
+	color: #ff9933;
 }
 
-#header {
-	position: fixed;
-	padding-left: 40px;
-	background-color:rgba(0,0,0,1);
-	width: 100%;
-	min-width: 900px;
-	background-image:url("../webimages/header.png");
-	background-position:right;
-	background-repeat: no-repeat;
+li a, li a:active {
+	color: #FFFFFF;
 }
 
-#header a {
-	color: #EDEBEB;
+li a:hover {
+	color: #000000;
 }
 
-#sidebar {
-	position: static;
-	margin-top: 100px;
-	/*background-color:rgba(0,0,0,0.75);*/
-	float: left;
+.navbar-collapse {
+	background-color: #00002a;
 }
 
-#sidebar li {
-	list-style: none;
+.lead {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    line-height: 28px;
 }
 
-#sidebar h6 {
-	margin-left: 40px;
+.lead-minor {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
 }
 
-#main {
-	/*background-color:rgba(0,0,0,0.6);*/
-	padding-top: 75px;
-	width: 800px;
-	margin-bottom: 40px;
-	float: right;
+.logo {
+	margin-top: 30px;
+	height: 100px;
+	width: 100px;
 }
 
-#main img {
-	padding-top: 5px;
-	padding-bottom: 5px;
+.starter-template {
+  text-align: center;
 }
 
-#progress {
-	max-width: 640px;
+.btn-lg {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	height: 50px;
+	width: 150px;
+	background-color: transparent;
+	border-color: #FFFFFF;
+	color: #FFFFFF;
+	font-size: 18px;
 }
 
-#versionTable li {
-	list-style: none;
+.social i {
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
-#footer {
-	width: auto;
+.social a, .social a:active {
+	color: #ffffff;
+	text-decoration: none;
 }
 
-.lang-img {
-	width: 20px;
+.social .fa {	
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	transition: 0.3s;
+}
+
+.social .fa:hover {
+	color: #ff9933;
+}
+
+.submission {
+	font-size: 14px;
+}
+
+.submission .separator {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 760px) {
+	body {
+		margin-bottom: 50px;
+	}
+
+	h1 {
+		font-size: 80px;
+	}
+
+	.logo {
+		margin-top: 30px;
+		height: 140px;
+		width: 140px;
+	}
+
+	.navbar-nav{
+	    margin: 0 auto;
+	    display: table;
+	    table-layout: fixed;
+	    float:none;
+	}
+
+	.social i {
+		padding-top: 20px;
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+
+	.lead-minor {
+	    font-size: 24px;
+	}
+
+	.btn-lg {
+		margin-top: 30px;
+		margin-bottom: 30px;
+		padding-top: 25px;
+		height: 100px;
+		width: 300px;
+		font-size: 32px;
+	}
+
+	.submission {
+		font-size: 24px;
+	}
+}
+
+@media (min-width: 795px) {
+	.navbar-collapse {
+		background-color: transparent;
+	}
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+	li {
+		background-color: transparent;
+	}
+
+	h1 {
+		font-size: 120px;
+	}
+
+	.logo {
+		margin-top: 30px;
+		height: 180px;
+		width: 180px;
+	}
 
 }
 
-.btn {
-	margin-bottom:5px;
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
 }

@@ -152,6 +152,7 @@ GameState.prototype.gameOver = function(reason) {
 	this.pause();
 	this.isGameOver = true;
 	$('#restartGameBtn').show();
+	$('#pause').hide();
 	$('#gameOver').modal({
 		backdrop: 'static',
 		keyboard: false,
@@ -427,5 +428,15 @@ GameState.prototype.checkAchievements = function () {
 		  });
 	  }
   }
-
 };
+
+GameState.prototype.getPlayerBehaviour = function() {
+	var behaviours = this._world.getBehaviors();
+	return behaviours[0];
+};
+  
+GameState.prototype.getPlayer = function() {
+	var behaviours = this._world.getBehaviors();
+	return behaviours[0].player;
+};
+

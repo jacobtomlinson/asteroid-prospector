@@ -4,7 +4,8 @@
 		<title>APE Mining Corporation</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=0.66, user-scalable=no">
+
 		<link rel="icon" type="image/png" href="images/ship.png">
 
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -20,6 +21,7 @@
 			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+
 
 	</head>
 	<body>
@@ -40,7 +42,7 @@
 					</div>
 				</div>
 						
-				<div class="navbar-collapse collapse "   id="navbar-collapse-1">
+				<div class="navbar-collapse collapse"   id="navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="game.html"><i class="glyphicon glyphicon-play"></i> Game</a></li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#handbook"><i class="glyphicon glyphicon-list-alt"></i> Employee Handbook
@@ -74,11 +76,30 @@
 					</div>
 		</div>
 
+
+		<div class="touchcontrol panel-left">
+			<div id="control-left">
+				<i class="glyphicon glyphicon-chevron-left"></i>
+			</div>
+			<div id="control-right">
+				<i class="glyphicon glyphicon-chevron-right"></i>
+			</div>
+		</div>
+		<div class="touchcontrol panel-right">
+			<div id="control-move">
+				<i class="glyphicon glyphicon-eject"></i>
+			</div>
+			<div id="control-shoot">
+				<i class="glyphicon glyphicon-screenshot"></i>
+			</div>
+		</div>
+
+
+
 		<canvas id="viewport"></canvas>
 
 
-
-		<!-- AddThis Butt<!-- AddThis Button BEGIN -->
+		<!-- AddThis Button BEGIN -->
 		<div class="addthis_toolbox addthis_floating_style addthis_16x16_style" style="left:0px;top:55px;padding-left:0px;background:none;">
 		<a class="addthis_button_preferred_1"></a>
 		<a class="addthis_button_preferred_2"></a>
@@ -255,7 +276,44 @@
 				$('#pause').on('click',function() {
 					gamestate.togglePause();
 				});
-
+				
+				// touch support
+				var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+				if (!supportsTouch) {
+					$('.touchcontrol').hide();
+				} else { 
+					
+					$('#control-left').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(-1);
+					}).bind('touchend mouseup', function (e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(0);
+					});
+					
+					$('#control-right').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(1);
+					}).bind('touchend mouseup', function (e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(0);
+					});
+					
+					$('#control-move').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayerBehaviour().movePlayer();
+					}).bind('touchend mouseup', function (e) {
+						e.preventDefault();
+						gamestate.getPlayerBehaviour().movePlayer(false);
+					});
+					
+					$('#control-shoot').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayer().shoot();
+					});
+				
+				}
+				
 			});
 		</script>
 	</body>

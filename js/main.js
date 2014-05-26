@@ -147,7 +147,7 @@ require(
 
         // create asteroids 
         var asteroids = [];
-        for ( var i = 0, l = 30; i < l; ++i ){
+        for ( var i = 0, l = 50; i < l; ++i ){
             spawnAsteroid(Physics, world, ship, renderer);
         }
 

@@ -6,7 +6,7 @@ This project is hosted via GitHub, therefore the game code is in the [gh-pages b
 
 [Play it here](http://killfall.github.io/asteroid-prospector/)
 
-![Screenshot](http://killfall.github.io/asteroid-prospector/webimages/screen061.png "Screenshot")
+![Screenshot](http://killfall.github.io/asteroid-prospector/original/webimages/screen061.png "Screenshot")
 
 ### Challenge
 This project is a solution to the following challenge created by Dr. Phil Metzger.

@@ -80,8 +80,8 @@ require(
             var ang = 4 * (Math.random() - 0.5) * Math.PI;
             //var rmin = 500;
             //var rmax = 900;
-            var rmin = 2000;
-            var rmax = 2400;
+            var rmin = 1000;
+            var rmax = 1400;
             var r = rmin + (rmax - rmin) * Math.random();
             //var x0 = 0;
             //var y0 = 0;
@@ -147,7 +147,7 @@ require(
 
         // create asteroids 
         var asteroids = [];
-        for ( var i = 0, l = 50; i < l; ++i ){
+        for ( var i = 0, l = 30; i < l; ++i ){
             spawnAsteroid(Physics, world, ship, renderer);
         }
 
@@ -289,15 +289,15 @@ require(
                     } else if (b.gameType == 'ship'){
                         renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#FF0000');
                     } else if (b.gameType == 'asteroid-s'){
-                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#58493C');
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#8A8077'); //#58493C
                     } else if (b.gameType == 'asteroid-c'){
-                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#2C2C2C');
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#6B6B6B'); //#2C2C2C
                     } else if (b.gameType == 'asteroid-m'){
-                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#505050');
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, '#848484'); //#505050
                     } else {
                         // color the dot based on how massive the body is
                         lightness = Math.max(Math.min(Math.sqrt(b.mass*10)|0, 100), 10);
-                        renderer.drawCircle(x + d.get(0), y + d.get(1), 1, 'hsl(60, 100%, '+lightness+'%)');
+                        renderer.drawCircle(x + d.get(0), y + d.get(1), 2, 'hsl(60, 100%, '+lightness+'%)');
                     }
                 }
             }

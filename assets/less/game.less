@@ -35,10 +35,37 @@ body {
     margin: 80px auto;
 }
 
-.btnContainer {
-	display:inline-block;
-	margin-top: 1em;
+.nav-game {
+	position:absolute;
+	right:0px;
+}
+
+.touchcontrol { 
+	position:absolute;
+	z-index:999;
+	font-size:250%;
 	color:#fff;
+	top:30%;
+	
+	&.panel-right { 
+		right:0px;
+	}
+	
+	div { 
+		padding:1em;
+		background:#ffcf00;
+		opacity:0.8;
+		margin: 4px 0px;
+		&:hover,
+		&:active {
+		  color:#000; 
+		  opacity:0.9;
+		}
+	}
+	
+}
+
+.btnContainer {
 	#restartGameBtn,
 	#pause {
 		display:none;

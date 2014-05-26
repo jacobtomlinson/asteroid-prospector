@@ -4,7 +4,8 @@
 		<title>APE Mining Corporation</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=0.66, user-scalable=no">
+
 		<link rel="icon" type="image/png" href="images/ship.png">
 
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -21,16 +22,28 @@
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+
 	</head>
 	<body>
 
 		<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
 				<div class="navbar-header">
-					<a href="#" class="navbar-brand"><i class="glyphicon glyphicon-globe"></i> APE Mining Corporation</a>
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+	        	<span class="sr-only">Toggle navigation</span>
+	        	<span class="icon-bar"></span>
+	        	<span class="icon-bar"></span>
+	       	 	<span class="icon-bar"></span>
+     			</button>
+					<a href="index.html" class="navbar-brand"><i class="glyphicon glyphicon-globe"></i> APE Mining Corporation</a>
+					<div class="btnContainer navbar-brand">
+						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" ><i class="glyphicon glyphicon-refresh"></i> Retry</a>
+						<button class="btn btn-info btn-sm" id="pause" value="Pause Game" ><i class="glyphicon glyphicon-pause"></i> Pause</button>
+						&nbsp;
+					</div>
 				</div>
-				<div class="navbar-collapse ">
+						
+				<div class="navbar-collapse collapse"   id="navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="index.html"><i class="glyphicon glyphicon-home"></i> Home</a></li>
 						<li class="active"><a href="game.html"><i class="glyphicon glyphicon-play"></i> Game</a></li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#handbook"><i class="glyphicon glyphicon-list-alt"></i> Employee Handbook
 							<b class="caret"></b>
@@ -41,34 +54,52 @@
 							</ul>
 						</li>
 					</ul>
-					<div class="btnContainer">
-						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" ><i class="glyphicon glyphicon-refresh"></i> Retry</a>
-						<button class="btn btn-info btn-sm" id="pause" value="Pause Game" ><i class="glyphicon glyphicon-pause"></i> Pause</button>
-					</div>
-					<div class="fuelbar pull-right">
-					FUEL
-						<div class="progress progress-striped" id="fuel">
-						  <div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-						    <span class="sr-only">100</span>
-						  </div>
-						</div>
-					</div>
-
-					<div id="scores" class=" pull-right">
-						<span class="preciousMetals" data-toggle="tooltip" data-placement="bottom" title="Precious Metals are worth money"><img src="images/pickupP.png"> <span>0</span> </span>
-						<span class="constructionMaterials"  data-toggle="tooltip" data-placement="bottom" title="Construction Materials can be used for building and colonisation"><img src="images/pickupC.png"> <span>0</span></span>
-						<span class="waste" data-toggle="tooltip" data-placement="bottom" title="Waste is worthless, but it's bad to leave it flying around in space"><img src="images/pickupW.png"> <span>0</span></span>
-						<span class="money"><i class="glyphicon glyphicon-usd"></i> <span class="badge">0</span> CASH </span>
-					</div>
-
 				</div>
+				<div class="nav-game">
+
+						<div class="fuelbar pull-right">
+						FUEL
+							<div class="progress progress-striped" id="fuel">
+							  <div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+							    <span class="sr-only">100</span>
+							  </div>
+							</div>
+						</div>
+	
+						<div id="scores" class=" pull-right">
+							<span class="preciousMetals" data-toggle="tooltip" data-placement="bottom" title="Precious Metals are worth money"><img src="images/pickupP.png"> <span>0</span> </span>
+							<span class="constructionMaterials"  data-toggle="tooltip" data-placement="bottom" title="Construction Materials can be used for building and colonisation"><img src="images/pickupC.png"> <span>0</span></span>
+							<span class="waste" data-toggle="tooltip" data-placement="bottom" title="Waste is worthless, but it's bad to leave it flying around in space"><img src="images/pickupW.png"> <span>0</span></span>
+							<span class="money"><i class="glyphicon glyphicon-usd"></i> <span class="badge">0</span> CASH </span>
+						</div>
+
+					</div>
 		</div>
+
+
+		<div class="touchcontrol panel-left">
+			<div id="control-left">
+				<i class="glyphicon glyphicon-chevron-left"></i>
+			</div>
+			<div id="control-right">
+				<i class="glyphicon glyphicon-chevron-right"></i>
+			</div>
+		</div>
+		<div class="touchcontrol panel-right">
+			<div id="control-move">
+				<i class="glyphicon glyphicon-eject"></i>
+			</div>
+			<div id="control-shoot">
+				<i class="glyphicon glyphicon-screenshot"></i>
+			</div>
+		</div>
+
+
 
 		<canvas id="viewport"></canvas>
 
 
-
-		<!-- AddThis Butt<!-- AddThis Button BEGIN -->
+		<!-- AddThis Button BEGIN -->
 		<div class="addthis_toolbox addthis_floating_style addthis_16x16_style" style="left:0px;top:55px;padding-left:0px;background:none;">
 		<a class="addthis_button_preferred_1"></a>
 		<a class="addthis_button_preferred_2"></a>
@@ -245,7 +276,44 @@
 				$('#pause').on('click',function() {
 					gamestate.togglePause();
 				});
-
+				
+				// touch support
+				var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+				if (!supportsTouch) {
+					$('.touchcontrol').hide();
+				} else { 
+					
+					$('#control-left').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(-1);
+					}).bind('touchend mouseup', function (e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(0);
+					});
+					
+					$('#control-right').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(1);
+					}).bind('touchend mouseup', function (e) {
+						e.preventDefault();
+						gamestate.getPlayer().turn(0);
+					});
+					
+					$('#control-move').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayerBehaviour().movePlayer();
+					}).bind('touchend mouseup', function (e) {
+						e.preventDefault();
+						gamestate.getPlayerBehaviour().movePlayer(false);
+					});
+					
+					$('#control-shoot').bind('touchstart mousedown', function(e) {
+						e.preventDefault();
+						gamestate.getPlayer().shoot();
+					});
+				
+				}
+				
 			});
 		</script>
 	</body>

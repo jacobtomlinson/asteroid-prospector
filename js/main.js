@@ -125,13 +125,19 @@ require(
 
         world.add( asteroid );
 
-        //console.log((ship.state.pos.get(0) / 2) + " " + (ship.state.pos.get(1) / 2));
-        //console.log(document.body.style.backgroundPosition);
     }
 
     var init = function init( world, Physics ){
 
-    	world.options({timestep: 1000/30, maxIPF: 8}); // set the physics resolution to 30 fps
+    	var maxAsteroids = 50;
+
+    	if (lowHW==true) {
+    		world.options({timestep: 1000/20, maxIPF: 4}); // set the physics resolution to 30 fps
+    		maxAsteroids = 40;
+    	} else {
+    		world.options({timestep: 1000/30, maxIPF: 8}); // set the physics resolution to 30 fps
+    	}
+
 
         // create spaceship which will be controlled by the user
         var ship = Physics.body('player', {
@@ -147,7 +153,8 @@ require(
 
         // create asteroids
         var asteroids = [];
-        for ( var i = 0, l = 50; i < l; ++i ){
+
+        for ( var i = 0, l = maxAsteroids; i < l; ++i ){
             spawnAsteroid(Physics, world, ship, renderer);
         }
 

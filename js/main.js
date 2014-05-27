@@ -265,6 +265,12 @@ require(
             var d = scratch.vector();
             var lightness;
 
+            // move and resize radar for smaller screens
+            if ($( window ).height() < 500) {
+            	r = 70;
+            	x = renderer.options.width - (r*3) - shim;
+            }
+
             // draw the radar guides
             renderer.drawCircle(x, y, r, { strokeStyle: '#B3B3B3', fillStyle: '#010' });
             renderer.drawCircle(x, y, r * 2 / 3, { strokeStyle: '#B3B3B3' });

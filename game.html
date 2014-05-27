@@ -38,7 +38,7 @@
      			</button>
 					<a href="index.html" class="navbar-brand"><i class="glyphicon glyphicon-globe"></i> APE Mining Corporation</a>
 					<div class="btnContainer navbar-brand">
-						<a href="game.html" class="btn btn-warning" id="restartGameBtn" value="Restart Game" ><i class="glyphicon glyphicon-refresh"></i> Retry</a>
+						<a href="game.html?skipintro=true" class="btn btn-warning" id="restartGameBtn" value="Restart Game" ><i class="glyphicon glyphicon-refresh"></i> Retry</a>
 						<button class="btn btn-info btn-sm" id="pause" value="Pause Game" ><i class="glyphicon glyphicon-pause"></i> Pause</button>
 						&nbsp;
 					</div>
@@ -140,7 +140,7 @@
 		      <div class="modal-body">
 					<p><strong>Escape pod launched.</strong> Docking will commence automatically.</p>
 					<div class="finalscore well">
-		      	<h2>Your Final Score: <span class="money">0</span></h2>
+		      	<h2>Your Final Score: <span class="money">0</span>K</h2>
 		      	<!-- AddThis Button BEGIN -->
 				<h3 style="float:left;display:inline;margin:0px;">Share: </h3>
 				<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
@@ -159,7 +159,7 @@
 					<p>You still have quotas to meet - get back out there as soon as possible! </p>
 		      </div>
 		      <div class="modal-footer">
-		      	<a class="btn btn-success" href="game.html"><i class="glyphicon glyphicon-refresh"></i> Retry</a>
+		      	<a class="btn btn-success" href="game.html?skipintro=true"><i class="glyphicon glyphicon-refresh"></i> Retry</a>
 		        <button type="button" class="btn" data-dismiss="modal">Close</button>
 		      </div>
 		    </div>
@@ -258,20 +258,25 @@
 		<script src="js/main.js"></script>
 		<script src="js/gamestate.js"></script>
 		<script type="text/javascript">
+
 		var gamestate = new GameState();
 		gamestate.init();
 
+		(function($) {
+		    $.QueryString = (function(a) {
+		        if (a == "") return {};
+		        var b = {};
+		        for (var i = 0; i < a.length; ++i)
+		        {
+		            var p=a[i].split('=');
+		            if (p.length != 2) continue;
+		            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+		        }
+		        return b;
+		    })(window.location.search.substr(1).split('&'))
+		})(jQuery)
+
 			$(function() {
-				$('#gameStartModal').modal({
-					backdrop: 'static',
-					show:true
-				});
-
-				$('#gameStartBtn').on('click',function() {
-					$('#gameStartModal').modal('hide');
-					gamestate.startGame();
-				});
-
 
 				$('#pause').on('click',function() {
 					gamestate.togglePause();
@@ -315,6 +320,30 @@
 				}
 
 			});
+
+
+		if ($.QueryString["skipintro"]!=undefined) {
+
+			$(window).load(function(){
+				  //your code here
+				gamestate.startGame();
+			});
+
+
+		} else {
+
+			$('#gameStartModal').modal({
+				backdrop: 'static',
+				show:true
+			});
+
+			$('#gameStartBtn').on('click',function() {
+				$('#gameStartModal').modal('hide');
+				gamestate.startGame();
+			});
+
+
+		}
 
 		</script>
 	</body>

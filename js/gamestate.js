@@ -1,9 +1,9 @@
 /**
  * Gamestate / UI helper functions
- * 
+ *
  * @package Asteroid Prospector (NASA Space Apps 2014 Hackathon)
  * @author Kris Sum
- * 
+ *
  */
 function GameState() {
 
@@ -125,6 +125,7 @@ GameState.prototype.pause = function() {
 	this._world.pause();
 
 	$('#pause').addClass('active');
+	$('#pause').html('<i class="glyphicon glyphicon-play"></i> Unpause');
 	$('#fuel').removeClass('active');
 	this.render();
 };
@@ -133,6 +134,7 @@ GameState.prototype.unpause = function() {
 	this.isPaused=false;
 	this._world.unpause();
 	$('#pause').removeClass('active');
+	$('#pause').html('<i class="glyphicon glyphicon-pause"></i> Pause');
 	$('#fuel').addClass('active');
 	this.render();
 };
@@ -241,7 +243,7 @@ GameState.prototype.onDock = function(dockingObject) {
 	gamestate.pause();
 
 	// generate the HTML breakdown
-	
+
 	var html='';
 
 	html += '<div class="row">';
@@ -282,7 +284,15 @@ GameState.prototype.onDock = function(dockingObject) {
 
 	html += '</div>'; // row
 
-	html += '<h2>Cash Value: $'+ score +'K </h2>';
+	html += '<h2><img src="images/pickupW.png"> Waste: $'+ (this._shipCargo.waste *  this.cashValues.waste)+'K </h2>';
+
+	html += '<div class="totalscore">';
+	html += '<h2>Cash Value: $'+ score +'K ';
+	if (score != this._money) {
+		html += ', Total: $'+ this._money +'K';
+	}
+	html += '</h2>';
+	html + '</div>';
 
 	// display message
 	$('#gameModal').modal({
@@ -294,6 +304,7 @@ GameState.prototype.onDock = function(dockingObject) {
 	});
 	$('#gameModal .modal-body').html(html);
 	$('#gameModal .modal-title').html('<i class="glyphicon glyphicon-download"></i> Docking Complete. Resources transferred and converted to cash.');
+	$('#gameModal .modal-footer .btn').focus();
 
   }
 
@@ -434,7 +445,7 @@ GameState.prototype.getPlayerBehaviour = function() {
 	var behaviours = this._world.getBehaviors();
 	return behaviours[0];
 };
-  
+
 GameState.prototype.getPlayer = function() {
 	var behaviours = this._world.getBehaviors();
 	return behaviours[0].player;

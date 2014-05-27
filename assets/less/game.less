@@ -40,29 +40,47 @@ body {
 	right:0px;
 }
 
-.touchcontrol { 
+.touchcontrol {
 	position:absolute;
 	z-index:999;
 	font-size:250%;
 	color:#fff;
 	top:30%;
-	
-	&.panel-right { 
+	font-size: 37px;
+
+  #control-left {
+  	background-image:url('../../images/arrows-02.png');
+    background-position: 32px center;
+    background-repeat: no-repeat;
+    height: 64px;
+    padding: 64px;
+    width: 64px;
+  }
+  #control-right{
+  	background-image:url('../../images/arrows-01.png');
+    background-position: 32px center;
+    background-repeat: no-repeat;
+    height: 64px;
+    padding: 64px;
+    width: 64px;
+  }
+
+	&.panel-right {
 		right:0px;
 	}
-	
-	div { 
+
+	div {
 		padding:1em;
 		background:#ffcf00;
 		opacity:0.8;
 		margin: 4px 0px;
 		&:hover,
 		&:active {
-		  color:#000; 
+		  color:#000;
 		  opacity:0.9;
 		}
 	}
-	
+
 }
 
 .btnContainer {

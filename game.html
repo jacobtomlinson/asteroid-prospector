@@ -262,6 +262,7 @@
 		var gamestate = new GameState();
 		gamestate.init();
 
+
 		var lowHW = false;
 
 
@@ -331,7 +332,6 @@
 				gamestate.startGame();
 			});
 
-
 		} else {
 
 			$('#gameStartModal').modal({
@@ -358,6 +358,13 @@
 				$(this).attr('href',$(this).attr('href')+'&low=1');
 			});
 		}
+
+		$(window).load(function() {
+			gamestate.soundShoot 		= new Audio("/assets/audio/shoot.wav");
+			gamestate.soundCollect 	= new Audio("/assets/audio/collect.wav");
+			gamestate.soundDock 		= new Audio("/assets/audio/dock.wav");
+			gamestate.soundExplode 	= new Audio("/assets/audio/explode.wav");
+		});
 
 
 		</script>

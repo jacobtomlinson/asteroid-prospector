@@ -82,8 +82,8 @@ define(
                     amount *= 0.0001;
                     // point the acceleration in the direction of the ship's nose
                     var v = scratch.vector().set(
-                        amount * Math.cos( angle ), 
-                        amount * Math.sin( angle ) 
+                        amount * Math.cos( angle ),
+                        amount * Math.sin( angle )
                     );
                     // accelerate self
                     this.accelerate( v );
@@ -101,6 +101,9 @@ define(
                 // that travels away from the ship's front.
                 // It will get removed after a timeout
                 shoot: function(){
+                	gamestate.soundShoot.pause();
+                	gamestate.soundShoot.currentTime = 0;
+                	gamestate.soundShoot.play();
                     var self = this;
                     var world = this._world;
                     if (!world){
@@ -150,7 +153,7 @@ define(
                     var verts;
                     var d;
                     var debris = [];
-                    
+
                     // create debris
                     while ( n-- ){
                         verts = rndPolygon( size, 3, 1.5 ); // get a random polygon

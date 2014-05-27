@@ -1,5 +1,5 @@
 /**
- * Define a basic pickup object, with function 'collect' that removes the pickup once it 
+ * Define a basic pickup object, with function 'collect' that removes the pickup once it
  * has been collected by the ship and say how much points it was worth
  */
 
@@ -25,6 +25,7 @@ define(
                     //this.view = ast1;
                 },
                 collect: function (pickup) {
+                	gamestate.soundCollect.play();
                     var self = this;
                     var world = self._world;
                     if (!world){
@@ -33,7 +34,7 @@ define(
                     pickup = typeof pickup !== 'undefined' ? pickup : "none";
                     // remove pickup
                     world.publish({
-                        topic: 'collect-point', 
+                        topic: 'collect-point',
                         body: pickup
                     });
                     world.removeBody( this );

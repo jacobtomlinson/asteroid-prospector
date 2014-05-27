@@ -15,8 +15,16 @@ define(
             var deg = Math.PI/180;
             var shipImg = new Image();
             var shipThrustImg = new Image();
+            var shipShieldImg = new Image();
+            var shipShieldThrustImg = new Image();
             shipImg.src = require.toUrl('images/ship.png');
             shipThrustImg.src = require.toUrl('images/ship-thrust.png');
+            shipShieldImg.src = require.toUrl('images/ship-shield.png');
+            shipShieldThrustImg.src = require.toUrl('images/ship-thrust-shield.png');
+
+            currentShipImg = shipImg;
+            currentShipThrustImg = shipThrustImg;
+
             var podImg = new Image();
             podImg.src = require.toUrl('images/pod.png');
 
@@ -59,7 +67,8 @@ define(
                     // set the rendering image
                     // because of the image i've chosen, the nose of the ship
                     // will point in the same angle as the body's rotational position
-                    this.view = shipImg;
+                    this.view = currentShipImg;
+                    this.enableShield();
                 },
                 // this will turn the ship by changing the
                 // body's angular velocity to + or - some amount
@@ -91,9 +100,9 @@ define(
 
                     // if we're accelerating set the image to the one with the thrusters on
                     if ( amount ){
-                        this.view = shipThrustImg;
+                        this.view = currentShipThrustImg;
                     } else {
-                        this.view = shipImg;
+                        this.view = currentShipImg;
                     }
                     return self;
                 },
@@ -214,6 +223,14 @@ define(
                     d.view = podImg;
                     world.add( d );
 
+                },
+                enableShield: function(){
+                    currentShipImg = shipShieldImg;
+                    currentShipThrustImg = shipShieldThrustImg;
+                },
+                disableShield: function(){
+                    currentShipImg = shipImg;
+                    currentShipThrustImg = shipThrustImg;
                 }
             };
         });

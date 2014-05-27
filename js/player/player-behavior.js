@@ -119,13 +119,18 @@ define(
                             }
                             // collisions with anything else should blow up the spaceship
                             else{
-                              player.blowUp();
-                              world.removeBehavior( this );
-                              this.gameover = true;
+                              if ( gamestate._shipShield ){
+                                setTimeout(function(){gamestate._shipShield = false;}, 1000);
+                                player.disableShield();
+                              } else {
+                                player.blowUp();
+                                world.removeBehavior( this );
+                                this.gameover = true;
 
-                              // when we crash, we'll publish an event to the world
-                              // that we can listen for to prompt to restart the game
-                              world.publish('lose-game');
+                                // when we crash, we'll publish an event to the world
+                                // that we can listen for to prompt to restart the game
+                                world.publish('lose-game');
+                              }
                               return;
     
                             }

@@ -21,6 +21,7 @@ function GameState() {
 	};
 
 	this._shipFuel = 100;
+	this._shipShield = true;
 	this._money = 0;
 	this._world = null;
 	this.isPaused = true;

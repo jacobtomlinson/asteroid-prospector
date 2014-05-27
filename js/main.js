@@ -145,7 +145,8 @@ require(
             y: 0,
             vx: 0.08,
             radius: 30,
-            mass: 30
+            mass: 30,
+            restitution: 0
         });
         ship.gameType = 'ship';
 
@@ -178,7 +179,8 @@ require(
             mass: 500,
             radius: 60,
             x: 200, // make sure it's not in the asteroid belt
-            y: 300
+            y: 300,
+            restitution: 0
         });
         mainbase.gameType = 'base';
         mainbase.view = new Image();

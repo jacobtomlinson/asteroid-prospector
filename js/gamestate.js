@@ -64,6 +64,7 @@ function GameState() {
 
 GameState.prototype.init = function() {
 	this.bindUI();
+
 };
 
 /**
@@ -152,6 +153,8 @@ GameState.prototype.startGame = function () {
  * @param reason - hit, fuel
  */
 GameState.prototype.gameOver = function(reason) {
+
+	this.soundExplode.play();
 	this.pause();
 	this.isGameOver = true;
 	$('#restartGameBtn').show();
@@ -209,6 +212,8 @@ GameState.prototype.pickup = function(type, amount) {
  */
 GameState.prototype.onDock = function(dockingObject) {
   this._shipFuel = 100;
+
+  this.soundDock.play();
 
   var score = 0;
 

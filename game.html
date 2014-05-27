@@ -5,6 +5,8 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=0.66, user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
 
 		<link rel="icon" type="image/png" href="images/ship.png">
 
@@ -41,7 +43,7 @@
 						&nbsp;
 					</div>
 				</div>
-						
+
 				<div class="navbar-collapse collapse"   id="navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="game.html"><i class="glyphicon glyphicon-play"></i> Game</a></li>
@@ -65,7 +67,7 @@
 							  </div>
 							</div>
 						</div>
-	
+
 						<div id="scores" class=" pull-right">
 							<span class="preciousMetals" data-toggle="tooltip" data-placement="bottom" title="Precious Metals are worth money"><img src="images/pickupP.png"> <span>0</span> </span>
 							<span class="constructionMaterials"  data-toggle="tooltip" data-placement="bottom" title="Construction Materials can be used for building and colonisation"><img src="images/pickupC.png"> <span>0</span></span>
@@ -276,13 +278,13 @@
 				$('#pause').on('click',function() {
 					gamestate.togglePause();
 				});
-				
+
 				// touch support
 				var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 				if (!supportsTouch) {
 					$('.touchcontrol').hide();
-				} else { 
-					
+				} else {
+
 					$('#control-left').bind('touchstart mousedown', function(e) {
 						e.preventDefault();
 						gamestate.getPlayer().turn(-1);
@@ -290,7 +292,7 @@
 						e.preventDefault();
 						gamestate.getPlayer().turn(0);
 					});
-					
+
 					$('#control-right').bind('touchstart mousedown', function(e) {
 						e.preventDefault();
 						gamestate.getPlayer().turn(1);
@@ -298,7 +300,7 @@
 						e.preventDefault();
 						gamestate.getPlayer().turn(0);
 					});
-					
+
 					$('#control-move').bind('touchstart mousedown', function(e) {
 						e.preventDefault();
 						gamestate.getPlayerBehaviour().movePlayer();
@@ -306,15 +308,16 @@
 						e.preventDefault();
 						gamestate.getPlayerBehaviour().movePlayer(false);
 					});
-					
+
 					$('#control-shoot').bind('touchstart mousedown', function(e) {
 						e.preventDefault();
 						gamestate.getPlayer().shoot();
 					});
-				
+
 				}
-				
+
 			});
+
 		</script>
 	</body>
 
@@ -330,7 +333,7 @@
 
 	</script>
 
-	<!-- AddThis Sharing Buttons -->	
+	<!-- AddThis Sharing Buttons -->
 	<script type="text/javascript">
 		var addthis_config = {
 			"data_track_addressbar":true,

@@ -111,7 +111,7 @@ define(
                 // It will get removed after a timeout
                 shoot: function(){
                 	gamestate.soundShoot.pause();
-                	gamestate.soundShoot.currentTime = 0;
+                	//gamestate.soundShoot.currentTime = 0;
                 	gamestate.soundShoot.play();
                     var self = this;
                     var world = this._world;

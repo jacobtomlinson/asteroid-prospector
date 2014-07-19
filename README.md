@@ -2,11 +2,11 @@ Asteroid Prospector
 ===================
 A browser based game involving mining asteroids. Part of the [2014 NASA Space Apps Challenge](https://2014.spaceappschallenge.org/challenge/asteroid-prospector/).
 
-This project is hosted via GitHub, therefore the game code is in the [gh-pages branch](https://github.com/killfall/asteroid-prospector/tree/gh-pages).
+This project is hosted via GitHub, therefore the game code is in the [gh-pages branch](https://github.com/jacobtomlinson/asteroid-prospector/tree/gh-pages).
 
-[Play it here](http://killfall.github.io/asteroid-prospector/)
+[Play it here](http://www.ape-mining.com/)
 
-![Screenshot](http://killfall.github.io/asteroid-prospector/original/webimages/screen061.png "Screenshot")
+![Screenshot](http://www.ape-mining.com/original/webimages/screen061.png "Screenshot")
 
 ### Challenge
 This project is a solution to the following challenge created by Dr. Phil Metzger.
